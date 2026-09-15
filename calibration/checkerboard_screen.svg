@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="720" viewBox="0 0 960 720">
+  <title>Calibration checkerboard: 10 by 7 squares, 9 by 6 inner corners</title>
+  <rect width="960" height="720" fill="white"/>
+<g fill="black">
+  <rect x="80" y="80" width="80" height="80"/>
+  <rect x="240" y="80" width="80" height="80"/>
+  <rect x="400" y="80" width="80" height="80"/>
+  <rect x="560" y="80" width="80" height="80"/>
+  <rect x="720" y="80" width="80" height="80"/>
+  <rect x="160" y="160" width="80" height="80"/>
+  <rect x="320" y="160" width="80" height="80"/>
+  <rect x="480" y="160" width="80" height="80"/>
+  <rect x="640" y="160" width="80" height="80"/>
+  <rect x="800" y="160" width="80" height="80"/>
+  <rect x="80" y="240" width="80" height="80"/>
+  <rect x="240" y="240" width="80" height="80"/>
+  <rect x="400" y="240" width="80" height="80"/>
+  <rect x="560" y="240" width="80" height="80"/>
+  <rect x="720" y="240" width="80" height="80"/>
+  <rect x="160" y="320" width="80" height="80"/>
+  <rect x="320" y="320" width="80" height="80"/>
+  <rect x="480" y="320" width="80" height="80"/>
+  <rect x="640" y="320" width="80" height="80"/>
+  <rect x="800" y="320" width="80" height="80"/>
+  <rect x="80" y="400" width="80" height="80"/>
+  <rect x="240" y="400" width="80" height="80"/>
+  <rect x="400" y="400" width="80" height="80"/>
+  <rect x="560" y="400" width="80" height="80"/>
+  <rect x="720" y="400" width="80" height="80"/>
+  <rect x="160" y="480" width="80" height="80"/>
+  <rect x="320" y="480" width="80" height="80"/>
+  <rect x="480" y="480" width="80" height="80"/>
+  <rect x="640" y="480" width="80" height="80"/>
+  <rect x="800" y="480" width="80" height="80"/>
+  <rect x="80" y="560" width="80" height="80"/>
+  <rect x="240" y="560" width="80" height="80"/>
+  <rect x="400" y="560" width="80" height="80"/>
+  <rect x="560" y="560" width="80" height="80"/>
+  <rect x="720" y="560" width="80" height="80"/>
+</g>
+</svg>

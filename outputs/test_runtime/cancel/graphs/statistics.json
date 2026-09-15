@@ -1,0 +1,10 @@
+{
+  "source_run": "outputs\\test_runtime\\cancel",
+  "processed_frames": 4,
+  "unprocessed_frames_within_plotted_span": 0,
+  "pose_valid_frames": 3,
+  "pose_limit_working_px": 5.0,
+  "median_processing_ms": 15.70869999977731,
+  "median_latency_ms": 25.039099999958125,
+  "median_accepted_rms_working_px": 0.023832783864060268
+}

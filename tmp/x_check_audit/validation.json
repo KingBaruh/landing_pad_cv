@@ -1,0 +1,268 @@
+{
+  "original_failures": [
+    {
+      "frame_id": 346,
+      "valid": true,
+      "score": 0.91025075318599,
+      "diagnostics": {
+        "black_fraction": 0.04170209750566893,
+        "diagonal_line_counts": [
+          3,
+          4
+        ],
+        "intersection_normalized": [
+          0.5197239737050381,
+          0.4986076957572644
+        ],
+        "arm_support": [
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ],
+        "explained_foreground": 1.0,
+        "crossing_distance_px": 0.0,
+        "rejection_reason": null,
+        "threshold_method": "adaptive_gaussian",
+        "attempts": [
+          {
+            "method": "otsu",
+            "valid": false,
+            "quality": 0.49,
+            "black_fraction": 0.018636621315192742,
+            "diagonal_line_counts": [
+              3,
+              2
+            ],
+            "intersection_normalized": [
+              0.5183666824533631,
+              0.49606019104113663
+            ],
+            "arm_support": [
+              1.0,
+              1.0,
+              0.8,
+              0.5333333333333333
+            ],
+            "explained_foreground": 1.0,
+            "crossing_distance_px": 0.0,
+            "rejection_reason": "missing_or_short_arm"
+          },
+          {
+            "method": "adaptive_gaussian",
+            "valid": true,
+            "quality": 0.91025075318599,
+            "black_fraction": 0.04170209750566893,
+            "diagonal_line_counts": [
+              3,
+              4
+            ],
+            "intersection_normalized": [
+              0.5197239737050381,
+              0.4986076957572644
+            ],
+            "arm_support": [
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "explained_foreground": 1.0,
+            "crossing_distance_px": 0.0,
+            "rejection_reason": null
+          }
+        ]
+      }
+    },
+    {
+      "frame_id": 576,
+      "valid": true,
+      "score": 0.835940120492418,
+      "diagnostics": {
+        "black_fraction": 0.0352891156462585,
+        "diagonal_line_counts": [
+          3,
+          2
+        ],
+        "intersection_normalized": [
+          0.44686457578601513,
+          0.5382214103648818
+        ],
+        "arm_support": [
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ],
+        "explained_foreground": 1.0,
+        "crossing_distance_px": 0.0,
+        "rejection_reason": null,
+        "threshold_method": "adaptive_gaussian",
+        "attempts": [
+          {
+            "method": "otsu",
+            "valid": false,
+            "quality": 0.0,
+            "black_fraction": 0.030576814058956917,
+            "diagonal_line_counts": [
+              5,
+              0
+            ],
+            "rejection_reason": "missing_diagonal_direction"
+          },
+          {
+            "method": "adaptive_gaussian",
+            "valid": true,
+            "quality": 0.835940120492418,
+            "black_fraction": 0.0352891156462585,
+            "diagonal_line_counts": [
+              3,
+              2
+            ],
+            "intersection_normalized": [
+              0.44686457578601513,
+              0.5382214103648818
+            ],
+            "arm_support": [
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "explained_foreground": 1.0,
+            "crossing_distance_px": 0.0,
+            "rejection_reason": null
+          }
+        ]
+      }
+    },
+    {
+      "frame_id": 646,
+      "valid": true,
+      "score": 0.8149047687802478,
+      "diagnostics": {
+        "black_fraction": 0.03582057823129252,
+        "diagonal_line_counts": [
+          2,
+          2
+        ],
+        "intersection_normalized": [
+          0.440888451052136,
+          0.5468706564803669
+        ],
+        "arm_support": [
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ],
+        "explained_foreground": 1.0,
+        "crossing_distance_px": 0.0,
+        "rejection_reason": null,
+        "threshold_method": "adaptive_gaussian",
+        "attempts": [
+          {
+            "method": "otsu",
+            "valid": false,
+            "quality": 0.0,
+            "black_fraction": 0.02806122448979592,
+            "diagonal_line_counts": [
+              0,
+              0
+            ],
+            "rejection_reason": "missing_diagonal_direction"
+          },
+          {
+            "method": "adaptive_gaussian",
+            "valid": true,
+            "quality": 0.8149047687802478,
+            "black_fraction": 0.03582057823129252,
+            "diagonal_line_counts": [
+              2,
+              2
+            ],
+            "intersection_normalized": [
+              0.440888451052136,
+              0.5468706564803669
+            ],
+            "arm_support": [
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "explained_foreground": 1.0,
+            "crossing_distance_px": 0.0,
+            "rejection_reason": null
+          }
+        ]
+      }
+    },
+    {
+      "frame_id": 676,
+      "valid": true,
+      "score": 0.8278793288095296,
+      "diagnostics": {
+        "black_fraction": 0.037875566893424036,
+        "diagonal_line_counts": [
+          2,
+          5
+        ],
+        "intersection_normalized": [
+          0.4265722680947374,
+          0.5510474979230681
+        ],
+        "arm_support": [
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ],
+        "explained_foreground": 1.0,
+        "crossing_distance_px": 0.0,
+        "rejection_reason": null,
+        "threshold_method": "adaptive_gaussian",
+        "attempts": [
+          {
+            "method": "otsu",
+            "valid": false,
+            "quality": 0.0,
+            "black_fraction": 0.033234126984126984,
+            "diagonal_line_counts": [
+              0,
+              4
+            ],
+            "rejection_reason": "missing_diagonal_direction"
+          },
+          {
+            "method": "adaptive_gaussian",
+            "valid": true,
+            "quality": 0.8278793288095296,
+            "black_fraction": 0.037875566893424036,
+            "diagonal_line_counts": [
+              2,
+              5
+            ],
+            "intersection_normalized": [
+              0.4265722680947374,
+              0.5510474979230681
+            ],
+            "arm_support": [
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "explained_foreground": 1.0,
+            "crossing_distance_px": 0.0,
+            "rejection_reason": null
+          }
+        ]
+      }
+    }
+  ],
+  "checkerboard_negatives": {
+    "count": 47,
+    "false_positives": []
+  }
+}

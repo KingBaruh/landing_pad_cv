@@ -1,0 +1,93 @@
+{
+  "processed_frames": 1,
+  "valid_frames": 1,
+  "pose_valid_frames": 1,
+  "elapsed_s": 0.12131440000030125,
+  "working_size": [
+    1280,
+    720
+  ],
+  "camera_matrix": [
+    [
+      900.0,
+      0.0,
+      640.0
+    ],
+    [
+      0.0,
+      900.0,
+      360.0
+    ],
+    [
+      0.0,
+      0.0,
+      1.0
+    ]
+  ],
+  "pose_error_limit_px": 5.0,
+  "coordinate_space": "undistorted_working_resolution",
+  "requests": 1,
+  "accepted_detections": 1,
+  "rejected_delayed_detections": 0,
+  "losses": 0,
+  "pose_resets": 0,
+  "skipped_source_frames": 0,
+  "detection_events": [
+    {
+      "source_frame": 0,
+      "current_frame": 0,
+      "scope": "global",
+      "detector_ms": 66.88709999980347,
+      "accepted": true,
+      "reason": "accepted",
+      "replayed_frames": 0,
+      "catchup_ms": 23.142800000641728
+    }
+  ],
+  "frames": [
+    {
+      "frame_id": 0,
+      "timestamp": 0.0,
+      "valid": true,
+      "corners": [
+        [
+          588.8049926757812,
+          154.96963500976562
+        ],
+        [
+          799.7982177734375,
+          214.3839111328125
+        ],
+        [
+          702.02587890625,
+          491.96435546875
+        ],
+        [
+          503.2484130859375,
+          461.73822021484375
+        ]
+      ],
+      "distance_m": 0.8482610766996773,
+      "position_xyz": [
+        0.009956191758285382,
+        -0.019938908053369054,
+        0.8479682590964165
+      ],
+      "orientation_rpy": [
+        0.30087922871210987,
+        -0.3487029604217346,
+        0.20004501967308458
+      ],
+      "confidence": 0.9984920101773915,
+      "state": "TRACKING",
+      "pose_valid": true,
+      "reason": "reinitialized_from_slow",
+      "reprojection_error_px": 0.025794470156022573,
+      "tracked_points": 21,
+      "processing_ms": 24.772300000222458,
+      "latency_ms": 107.65319999973144,
+      "detection_frame_id": 0,
+      "replayed_frames": 0
+    }
+  ]
+}

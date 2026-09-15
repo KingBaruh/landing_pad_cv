@@ -1,0 +1,200 @@
+{
+  "processed_frames": 4,
+  "valid_frames": 3,
+  "pose_valid_frames": 3,
+  "elapsed_s": 1.2982178000002023,
+  "working_size": [
+    1280,
+    720
+  ],
+  "camera_matrix": [
+    [
+      900.0,
+      0.0,
+      640.0
+    ],
+    [
+      0.0,
+      900.0,
+      360.0
+    ],
+    [
+      0.0,
+      0.0,
+      1.0
+    ]
+  ],
+  "pose_error_limit_px": 5.0,
+  "coordinate_space": "undistorted_working_resolution",
+  "requests": 1,
+  "accepted_detections": 1,
+  "rejected_delayed_detections": 0,
+  "losses": 0,
+  "pose_resets": 0,
+  "skipped_source_frames": 0,
+  "detection_events": [
+    {
+      "source_frame": 0,
+      "current_frame": 1,
+      "scope": "global",
+      "detector_ms": 71.72470000023168,
+      "accepted": true,
+      "reason": "accepted",
+      "replayed_frames": 1,
+      "catchup_ms": 28.580700000020443
+    }
+  ],
+  "frames": [
+    {
+      "frame_id": 0,
+      "timestamp": 0.0,
+      "valid": false,
+      "corners": null,
+      "distance_m": null,
+      "position_xyz": null,
+      "orientation_rpy": null,
+      "confidence": 0.0,
+      "state": "SEARCHING",
+      "pose_valid": false,
+      "reason": "waiting_for_detection",
+      "reprojection_error_px": null,
+      "tracked_points": 0,
+      "processing_ms": 16.92749999983789,
+      "latency_ms": 27.313499999763735,
+      "detection_frame_id": null,
+      "replayed_frames": 0
+    },
+    {
+      "frame_id": 1,
+      "timestamp": 0.06666666666666667,
+      "valid": true,
+      "corners": [
+        [
+          588.8046264648438,
+          154.96978759765625
+        ],
+        [
+          799.799560546875,
+          214.37979125976562
+        ],
+        [
+          702.0274047851562,
+          491.96917724609375
+        ],
+        [
+          503.24932861328125,
+          461.74053955078125
+        ]
+      ],
+      "distance_m": 0.8482535319315879,
+      "position_xyz": [
+        0.009957130628623578,
+        -0.019938227086360765,
+        0.8479607167108101
+      ],
+      "orientation_rpy": [
+        0.30085965734019765,
+        -0.348699869944458,
+        0.20004312707616181
+      ],
+      "confidence": 0.9984920101773915,
+      "state": "TRACKING",
+      "pose_valid": true,
+      "reason": "reinitialized_from_slow",
+      "reprojection_error_px": 0.023832783864060268,
+      "tracked_points": 21,
+      "processing_ms": 35.971900000731694,
+      "latency_ms": 46.191800000087824,
+      "detection_frame_id": 0,
+      "replayed_frames": 1
+    },
+    {
+      "frame_id": 2,
+      "timestamp": 0.13333333333333333,
+      "valid": true,
+      "corners": [
+        [
+          588.8035278320312,
+          154.9720458984375
+        ],
+        [
+          799.7996826171875,
+          214.37254333496094
+        ],
+        [
+          702.0288696289062,
+          491.96759033203125
+        ],
+        [
+          503.2546081542969,
+          461.741455078125
+        ]
+      ],
+      "distance_m": 0.8482526284496286,
+      "position_xyz": [
+        0.00995870924178011,
+        -0.019939283764147532,
+        0.8479597695320894
+      ],
+      "orientation_rpy": [
+        0.30087481533465604,
+        -0.3487146234135909,
+        0.20001712526774246
+      ],
+      "confidence": 1.0,
+      "state": "TRACKING",
+      "pose_valid": true,
+      "reason": "tracked",
+      "reprojection_error_px": 0.021552515401228208,
+      "tracked_points": 21,
+      "processing_ms": 13.812700000016775,
+      "latency_ms": 19.648200000119687,
+      "detection_frame_id": 0,
+      "replayed_frames": 1
+    },
+    {
+      "frame_id": 3,
+      "timestamp": 0.2,
+      "valid": true,
+      "corners": [
+        [
+          592.30029296875,
+          154.9875946044922
+        ],
+        [
+          802.985595703125,
+          214.4338836669922
+        ],
+        [
+          704.9505615234375,
+          491.9222106933594
+        ],
+        [
+          506.3979187011719,
+          461.7402648925781
+        ]
+      ],
+      "distance_m": 0.8483576027771494,
+      "position_xyz": [
+        0.012946635107273235,
+        -0.019929762306926137,
+        0.8480246525918809
+      ],
+      "orientation_rpy": [
+        0.30113801443823696,
+        -0.34869343494521854,
+        0.19999531761794098
+      ],
+      "confidence": 1.0,
+      "state": "TRACKING",
+      "pose_valid": true,
+      "reason": "tracked",
+      "reprojection_error_px": 0.05038450989666913,
+      "tracked_points": 21,
+      "processing_ms": 14.489899999716727,
+      "latency_ms": 22.764700000152516,
+      "detection_frame_id": 0,
+      "replayed_frames": 1
+    }
+  ]
+}

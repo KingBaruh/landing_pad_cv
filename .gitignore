@@ -1,0 +1,15 @@
+__pycache__/
+*.pyc
+.venv/
+venv/
+calibration/images/*
+!calibration/images/.gitkeep
+videos/*
+!videos/.gitkeep
+outputs/videos/*
+!outputs/videos/.gitkeep
+outputs/logs/*
+!outputs/logs/.gitkeep
+outputs/plots/*
+!outputs/plots/.gitkeep
+*.npz

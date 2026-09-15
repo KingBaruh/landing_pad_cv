@@ -1,0 +1,498 @@
+[
+  {
+    "video": "v1",
+    "source": "videos\\v1.mp4",
+    "full_sequential_decoded": 309,
+    "metadata_frames": 312,
+    "fps": 30.012825994014538,
+    "runtime_decoded": 250,
+    "processed": 235,
+    "pose_valid": 199,
+    "tracking_valid": 199,
+    "losses": 0,
+    "pose_resets": 0,
+    "source_frames_without_results": 15,
+    "first_pose_frame": 36,
+    "first_pose_s": 1.1994871794871795,
+    "median_rms_working_px": 1.1634109348816049,
+    "estimated_distance_range_m": [
+      0.7095098327602491,
+      2.0328961324790975
+    ],
+    "no_tracking": [
+      {
+        "first": 0,
+        "last": 35,
+        "start_s": 0.0,
+        "end_s": 1.1661680911680912,
+        "processed_count": 36,
+        "reasons": [
+          "waiting_for_detection"
+        ]
+      }
+    ],
+    "tracking_but_no_pose": [],
+    "reported_invalid": [
+      {
+        "first": 0,
+        "last": 35,
+        "start_s": 0.0,
+        "end_s": 1.1661680911680912,
+        "processed_count": 36,
+        "reasons": [
+          "waiting_for_detection"
+        ]
+      }
+    ],
+    "exit_codes": {
+      "Fast": 0,
+      "Slow": 0,
+      "Video": 0
+    },
+    "stopped": true
+  },
+  {
+    "video": "v2",
+    "source": "videos\\v2.mp4",
+    "full_sequential_decoded": 199,
+    "metadata_frames": 202,
+    "fps": 30.01282726445791,
+    "runtime_decoded": 199,
+    "processed": 188,
+    "pose_valid": 119,
+    "tracking_valid": 119,
+    "losses": 0,
+    "pose_resets": 0,
+    "source_frames_without_results": 11,
+    "first_pose_frame": 69,
+    "first_pose_s": 2.29901699669967,
+    "median_rms_working_px": 0.3496193098606205,
+    "estimated_distance_range_m": [
+      0.7674794633730744,
+      1.727817932356125
+    ],
+    "no_tracking": [
+      {
+        "first": 0,
+        "last": 68,
+        "start_s": 0.0,
+        "end_s": 2.2656979097909793,
+        "processed_count": 69,
+        "reasons": [
+          "waiting_for_detection"
+        ]
+      }
+    ],
+    "tracking_but_no_pose": [],
+    "reported_invalid": [
+      {
+        "first": 0,
+        "last": 68,
+        "start_s": 0.0,
+        "end_s": 2.2656979097909793,
+        "processed_count": 69,
+        "reasons": [
+          "waiting_for_detection"
+        ]
+      }
+    ],
+    "exit_codes": {
+      "Fast": 0,
+      "Slow": 0,
+      "Video": 0
+    },
+    "stopped": false
+  },
+  {
+    "video": "v3",
+    "source": "videos\\v3.mp4",
+    "full_sequential_decoded": 408,
+    "metadata_frames": 412,
+    "fps": 30.012821010917285,
+    "runtime_decoded": 408,
+    "processed": 377,
+    "pose_valid": 373,
+    "tracking_valid": 373,
+    "losses": 0,
+    "pose_resets": 0,
+    "source_frames_without_results": 31,
+    "first_pose_frame": 4,
+    "first_pose_s": 0.13327637540453074,
+    "median_rms_working_px": 0.6227022724027015,
+    "estimated_distance_range_m": [
+      1.514566443290238,
+      2.109213478118184
+    ],
+    "no_tracking": [
+      {
+        "first": 0,
+        "last": 3,
+        "start_s": 0.0,
+        "end_s": 0.09995728155339806,
+        "processed_count": 4,
+        "reasons": [
+          "waiting_for_detection"
+        ]
+      }
+    ],
+    "tracking_but_no_pose": [],
+    "reported_invalid": [
+      {
+        "first": 0,
+        "last": 3,
+        "start_s": 0.0,
+        "end_s": 0.09995728155339806,
+        "processed_count": 4,
+        "reasons": [
+          "waiting_for_detection"
+        ]
+      }
+    ],
+    "exit_codes": {
+      "Fast": 0,
+      "Slow": 0,
+      "Video": 0
+    },
+    "stopped": false
+  },
+  {
+    "video": "v4",
+    "source": "videos\\v4.mp4",
+    "full_sequential_decoded": 276,
+    "metadata_frames": 279,
+    "fps": 30.012801158917245,
+    "runtime_decoded": 276,
+    "processed": 265,
+    "pose_valid": 258,
+    "tracking_valid": 258,
+    "losses": 0,
+    "pose_resets": 0,
+    "source_frames_without_results": 11,
+    "first_pose_frame": 7,
+    "first_pose_s": 0.23323381123058542,
+    "median_rms_working_px": 0.9354418794535115,
+    "estimated_distance_range_m": [
+      1.4006942586471012,
+      1.8273938414598545
+    ],
+    "no_tracking": [
+      {
+        "first": 0,
+        "last": 6,
+        "start_s": 0.0,
+        "end_s": 0.1999146953405018,
+        "processed_count": 7,
+        "reasons": [
+          "waiting_for_detection"
+        ]
+      }
+    ],
+    "tracking_but_no_pose": [],
+    "reported_invalid": [
+      {
+        "first": 0,
+        "last": 6,
+        "start_s": 0.0,
+        "end_s": 0.1999146953405018,
+        "processed_count": 7,
+        "reasons": [
+          "waiting_for_detection"
+        ]
+      }
+    ],
+    "exit_codes": {
+      "Fast": 0,
+      "Slow": 0,
+      "Video": 0
+    },
+    "stopped": false
+  },
+  {
+    "video": "v5",
+    "source": "videos\\v5.mp4",
+    "full_sequential_decoded": 231,
+    "metadata_frames": 235,
+    "fps": 30.012813981572275,
+    "runtime_decoded": 231,
+    "processed": 221,
+    "pose_valid": 177,
+    "tracking_valid": 179,
+    "losses": 2,
+    "pose_resets": 1,
+    "source_frames_without_results": 10,
+    "first_pose_frame": 6,
+    "first_pose_s": 0.199914609929078,
+    "median_rms_working_px": 1.1019862810140533,
+    "estimated_distance_range_m": [
+      1.6288551409277086,
+      1.7395591355483904
+    ],
+    "no_tracking": [
+      {
+        "first": 0,
+        "last": 5,
+        "start_s": 0.0,
+        "end_s": 0.16659550827423167,
+        "processed_count": 6,
+        "reasons": [
+          "waiting_for_detection"
+        ]
+      },
+      {
+        "first": 106,
+        "last": 108,
+        "start_s": 3.5318247754137113,
+        "end_s": 3.598462978723404,
+        "processed_count": 3,
+        "reasons": [
+          "pose_inconsistent"
+        ]
+      },
+      {
+        "first": 197,
+        "last": 230,
+        "start_s": 6.563863026004728,
+        "end_s": 7.663393380614657,
+        "processed_count": 33,
+        "reasons": [
+          "x_verification_failed"
+        ]
+      }
+    ],
+    "tracking_but_no_pose": [
+      {
+        "first": 104,
+        "last": 105,
+        "start_s": 3.465186572104019,
+        "end_s": 3.498505673758865,
+        "processed_count": 2,
+        "reasons": [
+          "high_reprojection_error"
+        ]
+      }
+    ],
+    "reported_invalid": [
+      {
+        "first": 0,
+        "last": 5,
+        "start_s": 0.0,
+        "end_s": 0.16659550827423167,
+        "processed_count": 6,
+        "reasons": [
+          "waiting_for_detection"
+        ]
+      },
+      {
+        "first": 104,
+        "last": 108,
+        "start_s": 3.465186572104019,
+        "end_s": 3.598462978723404,
+        "processed_count": 5,
+        "reasons": [
+          "high_reprojection_error",
+          "pose_inconsistent"
+        ]
+      },
+      {
+        "first": 197,
+        "last": 230,
+        "start_s": 6.563863026004728,
+        "end_s": 7.663393380614657,
+        "processed_count": 33,
+        "reasons": [
+          "x_verification_failed"
+        ]
+      }
+    ],
+    "exit_codes": {
+      "Fast": 0,
+      "Slow": 0,
+      "Video": 0
+    },
+    "stopped": false
+  },
+  {
+    "video": "v6",
+    "source": "videos\\v6.mp4",
+    "full_sequential_decoded": 473,
+    "metadata_frames": 477,
+    "fps": 30.012814695862453,
+    "runtime_decoded": 473,
+    "processed": 435,
+    "pose_valid": 352,
+    "tracking_valid": 355,
+    "losses": 5,
+    "pose_resets": 1,
+    "source_frames_without_results": 38,
+    "first_pose_frame": 4,
+    "first_pose_s": 0.13327640344747263,
+    "median_rms_working_px": 0.7307970709276059,
+    "estimated_distance_range_m": [
+      1.2136452926846326,
+      1.9708402985727775
+    ],
+    "no_tracking": [
+      {
+        "first": 0,
+        "last": 3,
+        "start_s": 0.0,
+        "end_s": 0.09995730258560448,
+        "processed_count": 4,
+        "reasons": [
+          "waiting_for_detection"
+        ]
+      },
+      {
+        "first": 183,
+        "last": 184,
+        "start_s": 6.097395457721873,
+        "end_s": 6.130714558583741,
+        "processed_count": 2,
+        "reasons": [
+          "corner_anchor_inconsistent"
+        ]
+      },
+      {
+        "first": 195,
+        "last": 221,
+        "start_s": 6.497224668064291,
+        "end_s": 7.363521290472863,
+        "processed_count": 27,
+        "reasons": [
+          "pose_inconsistent"
+        ]
+      },
+      {
+        "first": 264,
+        "last": 280,
+        "start_s": 8.796242627533195,
+        "end_s": 9.329348241323084,
+        "processed_count": 17,
+        "reasons": [
+          "corner_anchor_inconsistent"
+        ]
+      },
+      {
+        "first": 291,
+        "last": 293,
+        "start_s": 9.695858350803634,
+        "end_s": 9.76249655252737,
+        "processed_count": 3,
+        "reasons": [
+          "implausible_quad"
+        ]
+      },
+      {
+        "first": 319,
+        "last": 345,
+        "start_s": 10.628793174935943,
+        "end_s": 11.495089797344514,
+        "processed_count": 27,
+        "reasons": [
+          "corner_anchor_inconsistent"
+        ]
+      }
+    ],
+    "tracking_but_no_pose": [
+      {
+        "first": 186,
+        "last": 186,
+        "start_s": 6.197352760307478,
+        "end_s": 6.197352760307478,
+        "processed_count": 1,
+        "reasons": [
+          "high_reprojection_error"
+        ]
+      },
+      {
+        "first": 193,
+        "last": 194,
+        "start_s": 6.4305864663405545,
+        "end_s": 6.463905567202423,
+        "processed_count": 2,
+        "reasons": [
+          "high_reprojection_error"
+        ]
+      }
+    ],
+    "reported_invalid": [
+      {
+        "first": 0,
+        "last": 3,
+        "start_s": 0.0,
+        "end_s": 0.09995730258560448,
+        "processed_count": 4,
+        "reasons": [
+          "waiting_for_detection"
+        ]
+      },
+      {
+        "first": 183,
+        "last": 184,
+        "start_s": 6.097395457721873,
+        "end_s": 6.130714558583741,
+        "processed_count": 2,
+        "reasons": [
+          "corner_anchor_inconsistent"
+        ]
+      },
+      {
+        "first": 186,
+        "last": 186,
+        "start_s": 6.197352760307478,
+        "end_s": 6.197352760307478,
+        "processed_count": 1,
+        "reasons": [
+          "high_reprojection_error"
+        ]
+      },
+      {
+        "first": 193,
+        "last": 221,
+        "start_s": 6.4305864663405545,
+        "end_s": 7.363521290472863,
+        "processed_count": 29,
+        "reasons": [
+          "high_reprojection_error",
+          "pose_inconsistent"
+        ]
+      },
+      {
+        "first": 264,
+        "last": 280,
+        "start_s": 8.796242627533195,
+        "end_s": 9.329348241323084,
+        "processed_count": 17,
+        "reasons": [
+          "corner_anchor_inconsistent"
+        ]
+      },
+      {
+        "first": 291,
+        "last": 293,
+        "start_s": 9.695858350803634,
+        "end_s": 9.76249655252737,
+        "processed_count": 3,
+        "reasons": [
+          "implausible_quad"
+        ]
+      },
+      {
+        "first": 319,
+        "last": 345,
+        "start_s": 10.628793174935943,
+        "end_s": 11.495089797344514,
+        "processed_count": 27,
+        "reasons": [
+          "corner_anchor_inconsistent"
+        ]
+      }
+    ],
+    "exit_codes": {
+      "Fast": 0,
+      "Slow": 0,
+      "Video": 0
+    },
+    "stopped": false
+  }
+]

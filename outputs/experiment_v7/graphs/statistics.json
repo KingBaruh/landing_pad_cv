@@ -1,0 +1,10 @@
+{
+  "source_run": "outputs\\experiment_v7",
+  "processed_frames": 228,
+  "unprocessed_frames_within_plotted_span": 35,
+  "pose_valid_frames": 224,
+  "pose_limit_working_px": 1.6666666666666665,
+  "median_processing_ms": 58.476149999478366,
+  "median_latency_ms": 103.95204999986163,
+  "median_accepted_rms_working_px": 0.2684072126148807
+}

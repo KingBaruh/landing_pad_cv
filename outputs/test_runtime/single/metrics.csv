@@ -1,0 +1,2 @@
+timestamp,frame_id,state,valid,confidence,tracked_points,ransac_inlier_ratio,reprojection_error_px,processing_time_ms,distance_m,pose_valid,latency_ms
+0.0,0,TRACKING,True,0.9984920101773915,21,,0.025794470156022573,24.772300000222458,0.8482610766996773,True,107.65319999973144

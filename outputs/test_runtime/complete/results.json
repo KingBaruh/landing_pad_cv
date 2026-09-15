@@ -1,0 +1,1670 @@
+{
+  "processed_frames": 44,
+  "valid_frames": 29,
+  "pose_valid_frames": 29,
+  "elapsed_s": 3.054608499999631,
+  "working_size": [
+    1280,
+    720
+  ],
+  "camera_matrix": [
+    [
+      900.0,
+      0.0,
+      640.0
+    ],
+    [
+      0.0,
+      900.0,
+      360.0
+    ],
+    [
+      0.0,
+      0.0,
+      1.0
+    ]
+  ],
+  "pose_error_limit_px": 5.0,
+  "coordinate_space": "undistorted_working_resolution",
+  "requests": 7,
+  "accepted_detections": 3,
+  "rejected_delayed_detections": 4,
+  "losses": 1,
+  "pose_resets": 0,
+  "skipped_source_frames": 1,
+  "detection_events": [
+    {
+      "source_frame": 0,
+      "current_frame": 3,
+      "scope": "global",
+      "detector_ms": 137.70110000041313,
+      "accepted": true,
+      "reason": "accepted",
+      "replayed_frames": 3,
+      "catchup_ms": 55.13229999996838
+    },
+    {
+      "source_frame": 15,
+      "current_frame": 17,
+      "scope": "local",
+      "detector_ms": 59.92360000072949,
+      "accepted": false,
+      "reason": "replay_corner_anchor_lost",
+      "replayed_frames": 1,
+      "catchup_ms": 24.038100000325358
+    },
+    {
+      "source_frame": 18,
+      "current_frame": 19,
+      "scope": "local",
+      "detector_ms": 4.4276999997237,
+      "accepted": false,
+      "reason": "no_detection",
+      "replayed_frames": 0,
+      "catchup_ms": 0.005599999894911889
+    },
+    {
+      "source_frame": 21,
+      "current_frame": 22,
+      "scope": "local",
+      "detector_ms": 3.494900000077905,
+      "accepted": false,
+      "reason": "no_detection",
+      "replayed_frames": 0,
+      "catchup_ms": 0.0059000003602704965
+    },
+    {
+      "source_frame": 24,
+      "current_frame": 25,
+      "scope": "local",
+      "detector_ms": 3.659199999674456,
+      "accepted": false,
+      "reason": "no_detection",
+      "replayed_frames": 0,
+      "catchup_ms": 0.006399999620043673
+    },
+    {
+      "source_frame": 27,
+      "current_frame": 28,
+      "scope": "local",
+      "detector_ms": 48.9899999993213,
+      "accepted": true,
+      "reason": "accepted",
+      "replayed_frames": 1,
+      "catchup_ms": 30.019300000276417
+    },
+    {
+      "source_frame": 30,
+      "current_frame": 31,
+      "scope": "local",
+      "detector_ms": 52.643300000454474,
+      "accepted": true,
+      "reason": "accepted",
+      "replayed_frames": 1,
+      "catchup_ms": 27.342099999259517
+    }
+  ],
+  "frames": [
+    {
+      "frame_id": 0,
+      "timestamp": 0.0,
+      "valid": false,
+      "corners": null,
+      "distance_m": null,
+      "position_xyz": null,
+      "orientation_rpy": null,
+      "confidence": 0.0,
+      "state": "SEARCHING",
+      "pose_valid": false,
+      "reason": "waiting_for_detection",
+      "reprojection_error_px": null,
+      "tracked_points": 0,
+      "processing_ms": 8.552700000109326,
+      "latency_ms": 15.117700000701007,
+      "detection_frame_id": null,
+      "replayed_frames": 0
+    },
+    {
+      "frame_id": 1,
+      "timestamp": 0.06666666666666667,
+      "valid": false,
+      "corners": null,
+      "distance_m": null,
+      "position_xyz": null,
+      "orientation_rpy": null,
+      "confidence": 0.0,
+      "state": "SEARCHING",
+      "pose_valid": false,
+      "reason": "waiting_for_detection",
+      "reprojection_error_px": null,
+      "tracked_points": 0,
+      "processing_ms": 5.736199999773817,
+      "latency_ms": 11.377300000276591,
+      "detection_frame_id": null,
+      "replayed_frames": 0
+    },
+    {
+      "frame_id": 2,
+      "timestamp": 0.13333333333333333,
+      "valid": false,
+      "corners": null,
+      "distance_m": null,
+      "position_xyz": null,
+      "orientation_rpy": null,
+      "confidence": 0.0,
+      "state": "SEARCHING",
+      "pose_valid": false,
+      "reason": "waiting_for_detection",
+      "reprojection_error_px": null,
+      "tracked_points": 0,
+      "processing_ms": 7.097300000168616,
+      "latency_ms": 18.857699999898614,
+      "detection_frame_id": null,
+      "replayed_frames": 0
+    },
+    {
+      "frame_id": 3,
+      "timestamp": 0.2,
+      "valid": true,
+      "corners": [
+        [
+          592.30029296875,
+          154.9875946044922
+        ],
+        [
+          802.985595703125,
+          214.4338836669922
+        ],
+        [
+          704.9505615234375,
+          491.9222106933594
+        ],
+        [
+          506.3979187011719,
+          461.7402648925781
+        ]
+      ],
+      "distance_m": 0.84835756095805,
+      "position_xyz": [
+        0.01294663541677553,
+        -0.01992975177283894,
+        0.848024610999203
+      ],
+      "orientation_rpy": [
+        0.30113842253817963,
+        -0.34869367760077075,
+        0.199995175154792
+      ],
+      "confidence": 0.9984920101773915,
+      "state": "TRACKING",
+      "pose_valid": true,
+      "reason": "reinitialized_from_slow",
+      "reprojection_error_px": 0.05038451402208846,
+      "tracked_points": 21,
+      "processing_ms": 67.55479999992531,
+      "latency_ms": 79.64499999980035,
+      "detection_frame_id": 0,
+      "replayed_frames": 3
+    },
+    {
+      "frame_id": 4,
+      "timestamp": 0.26666666666666666,
+      "valid": true,
+      "corners": [
+        [
+          592.30029296875,
+          154.9875946044922
+        ],
+        [
+          802.985595703125,
+          214.4338836669922
+        ],
+        [
+          704.9505615234375,
+          491.9222106933594
+        ],
+        [
+          506.3979187011719,
+          461.7402648925781
+        ]
+      ],
+      "distance_m": 0.84835756095805,
+      "position_xyz": [
+        0.01294663541677553,
+        -0.01992975177283894,
+        0.848024610999203
+      ],
+      "orientation_rpy": [
+        0.30113842253817963,
+        -0.34869367760077075,
+        0.199995175154792
+      ],
+      "confidence": 1.0,
+      "state": "TRACKING",
+      "pose_valid": true,
+      "reason": "tracked",
+      "reprojection_error_px": 0.05038451402208846,
+      "tracked_points": 21,
+      "processing_ms": 15.708099999756087,
+      "latency_ms": 33.77009999985603,
+      "detection_frame_id": 0,
+      "replayed_frames": 3
+    },
+    {
+      "frame_id": 5,
+      "timestamp": 0.3333333333333333,
+      "valid": true,
+      "corners": [
+        [
+          592.30029296875,
+          154.9875946044922
+        ],
+        [
+          802.985595703125,
+          214.4338836669922
+        ],
+        [
+          704.9505615234375,
+          491.9222106933594
+        ],
+        [
+          506.3979187011719,
+          461.7402648925781
+        ]
+      ],
+      "distance_m": 0.84835756095805,
+      "position_xyz": [
+        0.01294663541677553,
+        -0.01992975177283894,
+        0.848024610999203
+      ],
+      "orientation_rpy": [
+        0.30113842253817963,
+        -0.34869367760077075,
+        0.199995175154792
+      ],
+      "confidence": 1.0,
+      "state": "TRACKING",
+      "pose_valid": true,
+      "reason": "tracked",
+      "reprojection_error_px": 0.05038451402208846,
+      "tracked_points": 21,
+      "processing_ms": 17.612100000405917,
+      "latency_ms": 23.943099999996775,
+      "detection_frame_id": 0,
+      "replayed_frames": 3
+    },
+    {
+      "frame_id": 6,
+      "timestamp": 0.4,
+      "valid": true,
+      "corners": [
+        [
+          595.7647094726562,
+          154.9672393798828
+        ],
+        [
+          806.1646728515625,
+          214.46876525878906
+        ],
+        [
+          707.8675537109375,
+          491.8887634277344
+        ],
+        [
+          509.53997802734375,
+          461.7409362792969
+        ]
+      ],
+      "distance_m": 0.8484314148151593,
+      "position_xyz": [
+        0.01592457004616153,
+        -0.019933474899494253,
+        0.8480477169903408
+      ],
+      "orientation_rpy": [
+        0.30121962536053265,
+        -0.3485773815916494,
+        0.19998863097981326
+      ],
+      "confidence": 1.0,
+      "state": "TRACKING",
+      "pose_valid": true,
+      "reason": "tracked",
+      "reprojection_error_px": 0.07737022579637891,
+      "tracked_points": 21,
+      "processing_ms": 16.82269999946584,
+      "latency_ms": 23.413199999595236,
+      "detection_frame_id": 0,
+      "replayed_frames": 3
+    },
+    {
+      "frame_id": 7,
+      "timestamp": 0.4666666666666667,
+      "valid": true,
+      "corners": [
+        [
+          595.7647094726562,
+          154.9672393798828
+        ],
+        [
+          806.1646728515625,
+          214.46876525878906
+        ],
+        [
+          707.8675537109375,
+          491.8887634277344
+        ],
+        [
+          509.53997802734375,
+          461.7409362792969
+        ]
+      ],
+      "distance_m": 0.8484314148151593,
+      "position_xyz": [
+        0.01592457004616153,
+        -0.019933474899494253,
+        0.8480477169903408
+      ],
+      "orientation_rpy": [
+        0.30121962536053265,
+        -0.3485773815916494,
+        0.19998863097981326
+      ],
+      "confidence": 1.0,
+      "state": "TRACKING",
+      "pose_valid": true,
+      "reason": "tracked",
+      "reprojection_error_px": 0.07737022579637891,
+      "tracked_points": 21,
+      "processing_ms": 16.395099999499507,
+      "latency_ms": 22.303300000203308,
+      "detection_frame_id": 0,
+      "replayed_frames": 3
+    },
+    {
+      "frame_id": 8,
+      "timestamp": 0.5333333333333333,
+      "valid": true,
+      "corners": [
+        [
+          595.7647094726562,
+          154.9672393798828
+        ],
+        [
+          806.1646728515625,
+          214.46876525878906
+        ],
+        [
+          707.8675537109375,
+          491.8887634277344
+        ],
+        [
+          509.53997802734375,
+          461.7409362792969
+        ]
+      ],
+      "distance_m": 0.8484314148151593,
+      "position_xyz": [
+        0.01592457004616153,
+        -0.019933474899494253,
+        0.8480477169903408
+      ],
+      "orientation_rpy": [
+        0.30121962536053265,
+        -0.3485773815916494,
+        0.19998863097981326
+      ],
+      "confidence": 1.0,
+      "state": "TRACKING",
+      "pose_valid": true,
+      "reason": "tracked",
+      "reprojection_error_px": 0.07737022579637891,
+      "tracked_points": 21,
+      "processing_ms": 16.09719999942172,
+      "latency_ms": 22.183800000675546,
+      "detection_frame_id": 0,
+      "replayed_frames": 3
+    },
+    {
+      "frame_id": 9,
+      "timestamp": 0.6,
+      "valid": true,
+      "corners": [
+        [
+          599.2616577148438,
+          154.99757385253906
+        ],
+        [
+          809.3374633789062,
+          214.503662109375
+        ],
+        [
+          710.7930908203125,
+          491.8563537597656
+        ],
+        [
+          512.692626953125,
+          461.73992919921875
+        ]
+      ],
+      "distance_m": 0.848581131907179,
+      "position_xyz": [
+        0.018915396961249165,
+        -0.01992720216695764,
+        0.848136222431553
+      ],
+      "orientation_rpy": [
+        0.301344942993165,
+        -0.3485640457954626,
+        0.19994309469464183
+      ],
+      "confidence": 1.0,
+      "state": "TRACKING",
+      "pose_valid": true,
+      "reason": "tracked",
+      "reprojection_error_px": 0.09334148030805516,
+      "tracked_points": 21,
+      "processing_ms": 16.837399999531044,
+      "latency_ms": 23.65509999981441,
+      "detection_frame_id": 0,
+      "replayed_frames": 3
+    },
+    {
+      "frame_id": 10,
+      "timestamp": 0.6666666666666666,
+      "valid": true,
+      "corners": [
+        [
+          599.2616577148438,
+          154.99757385253906
+        ],
+        [
+          809.3374633789062,
+          214.503662109375
+        ],
+        [
+          710.7930908203125,
+          491.8563537597656
+        ],
+        [
+          512.692626953125,
+          461.73992919921875
+        ]
+      ],
+      "distance_m": 0.848581131907179,
+      "position_xyz": [
+        0.018915396961249165,
+        -0.01992720216695764,
+        0.848136222431553
+      ],
+      "orientation_rpy": [
+        0.301344942993165,
+        -0.3485640457954626,
+        0.19994309469464183
+      ],
+      "confidence": 1.0,
+      "state": "TRACKING",
+      "pose_valid": true,
+      "reason": "tracked",
+      "reprojection_error_px": 0.09334148030805516,
+      "tracked_points": 21,
+      "processing_ms": 66.18369999978313,
+      "latency_ms": 73.43320000018139,
+      "detection_frame_id": 0,
+      "replayed_frames": 3
+    },
+    {
+      "frame_id": 11,
+      "timestamp": 0.7333333333333333,
+      "valid": true,
+      "corners": [
+        [
+          599.2616577148438,
+          154.99757385253906
+        ],
+        [
+          809.3374633789062,
+          214.503662109375
+        ],
+        [
+          710.7930908203125,
+          491.8563537597656
+        ],
+        [
+          512.692626953125,
+          461.73992919921875
+        ]
+      ],
+      "distance_m": 0.848581131907179,
+      "position_xyz": [
+        0.018915396961249165,
+        -0.01992720216695764,
+        0.848136222431553
+      ],
+      "orientation_rpy": [
+        0.301344942993165,
+        -0.3485640457954626,
+        0.19994309469464183
+      ],
+      "confidence": 1.0,
+      "state": "TRACKING",
+      "pose_valid": true,
+      "reason": "tracked",
+      "reprojection_error_px": 0.09334148030805516,
+      "tracked_points": 26,
+      "processing_ms": 17.298599999776343,
+      "latency_ms": 27.09210000011808,
+      "detection_frame_id": 0,
+      "replayed_frames": 3
+    },
+    {
+      "frame_id": 12,
+      "timestamp": 0.8,
+      "valid": true,
+      "corners": [
+        [
+          602.7300415039062,
+          154.9921875
+        ],
+        [
+          812.5143432617188,
+          214.5166015625
+        ],
+        [
+          713.711669921875,
+          491.81732177734375
+        ],
+        [
+          515.861328125,
+          461.73980712890625
+        ]
+      ],
+      "distance_m": 0.8487041076584209,
+      "position_xyz": [
+        0.021902737073309288,
+        -0.019935166330217097,
+        0.8481871972674195
+      ],
+      "orientation_rpy": [
+        0.30143928733945885,
+        -0.34851589801160127,
+        0.19985980725907107
+      ],
+      "confidence": 1.0,
+      "state": "TRACKING",
+      "pose_valid": true,
+      "reason": "tracked",
+      "reprojection_error_px": 0.1093658705053407,
+      "tracked_points": 26,
+      "processing_ms": 15.974199999618577,
+      "latency_ms": 22.26729999983945,
+      "detection_frame_id": 0,
+      "replayed_frames": 3
+    },
+    {
+      "frame_id": 13,
+      "timestamp": 0.8666666666666667,
+      "valid": true,
+      "corners": [
+        [
+          602.7300415039062,
+          154.9921875
+        ],
+        [
+          812.5143432617188,
+          214.5166015625
+        ],
+        [
+          713.711669921875,
+          491.81732177734375
+        ],
+        [
+          515.861328125,
+          461.73980712890625
+        ]
+      ],
+      "distance_m": 0.8487041076584209,
+      "position_xyz": [
+        0.021902737073309288,
+        -0.019935166330217097,
+        0.8481871972674195
+      ],
+      "orientation_rpy": [
+        0.30143928733945885,
+        -0.34851589801160127,
+        0.19985980725907107
+      ],
+      "confidence": 1.0,
+      "state": "TRACKING",
+      "pose_valid": true,
+      "reason": "tracked",
+      "reprojection_error_px": 0.1093658705053407,
+      "tracked_points": 26,
+      "processing_ms": 15.959800000018731,
+      "latency_ms": 23.174400000243622,
+      "detection_frame_id": 0,
+      "replayed_frames": 3
+    },
+    {
+      "frame_id": 14,
+      "timestamp": 0.9333333333333333,
+      "valid": true,
+      "corners": [
+        [
+          602.7300415039062,
+          154.9921875
+        ],
+        [
+          812.5143432617188,
+          214.5166015625
+        ],
+        [
+          713.711669921875,
+          491.81732177734375
+        ],
+        [
+          515.861328125,
+          461.73980712890625
+        ]
+      ],
+      "distance_m": 0.8487041076584209,
+      "position_xyz": [
+        0.021902737073309288,
+        -0.019935166330217097,
+        0.8481871972674195
+      ],
+      "orientation_rpy": [
+        0.30143928733945885,
+        -0.34851589801160127,
+        0.19985980725907107
+      ],
+      "confidence": 1.0,
+      "state": "TRACKING",
+      "pose_valid": true,
+      "reason": "tracked",
+      "reprojection_error_px": 0.1093658705053407,
+      "tracked_points": 26,
+      "processing_ms": 16.29899999988993,
+      "latency_ms": 23.05400000022928,
+      "detection_frame_id": 0,
+      "replayed_frames": 3
+    },
+    {
+      "frame_id": 15,
+      "timestamp": 1.0,
+      "valid": true,
+      "corners": [
+        [
+          606.2183227539062,
+          154.9991912841797
+        ],
+        [
+          815.71240234375,
+          214.5206298828125
+        ],
+        [
+          716.62451171875,
+          491.80108642578125
+        ],
+        [
+          519.006103515625,
+          461.71356201171875
+        ]
+      ],
+      "distance_m": 0.8488197910883327,
+      "position_xyz": [
+        0.024890595540051803,
+        -0.01994100330698216,
+        0.8482204031877643
+      ],
+      "orientation_rpy": [
+        0.3015784743578887,
+        -0.34833757319758785,
+        0.1998857227053259
+      ],
+      "confidence": 1.0,
+      "state": "TRACKING",
+      "pose_valid": true,
+      "reason": "tracked",
+      "reprojection_error_px": 0.11114083120867375,
+      "tracked_points": 26,
+      "processing_ms": 17.120799999247538,
+      "latency_ms": 26.146500000322703,
+      "detection_frame_id": 0,
+      "replayed_frames": 3
+    },
+    {
+      "frame_id": 16,
+      "timestamp": 1.0666666666666667,
+      "valid": false,
+      "corners": null,
+      "distance_m": null,
+      "position_xyz": null,
+      "orientation_rpy": null,
+      "confidence": 0.0,
+      "state": "LOST",
+      "pose_valid": false,
+      "reason": "corner_anchor_lost",
+      "reprojection_error_px": null,
+      "tracked_points": 0,
+      "processing_ms": 12.01889999993,
+      "latency_ms": 18.791999999848485,
+      "detection_frame_id": 0,
+      "replayed_frames": 3
+    },
+    {
+      "frame_id": 17,
+      "timestamp": 1.1333333333333333,
+      "valid": false,
+      "corners": null,
+      "distance_m": null,
+      "position_xyz": null,
+      "orientation_rpy": null,
+      "confidence": 0.0,
+      "state": "LOST",
+      "pose_valid": false,
+      "reason": "corner_anchor_lost",
+      "reprojection_error_px": null,
+      "tracked_points": 0,
+      "processing_ms": 29.393699999673117,
+      "latency_ms": 35.24139999990439,
+      "detection_frame_id": 0,
+      "replayed_frames": 3
+    },
+    {
+      "frame_id": 18,
+      "timestamp": 1.2,
+      "valid": false,
+      "corners": null,
+      "distance_m": null,
+      "position_xyz": null,
+      "orientation_rpy": null,
+      "confidence": 0.0,
+      "state": "LOST",
+      "pose_valid": false,
+      "reason": "corner_anchor_lost",
+      "reprojection_error_px": null,
+      "tracked_points": 0,
+      "processing_ms": 5.037699999775214,
+      "latency_ms": 11.231799999222858,
+      "detection_frame_id": 0,
+      "replayed_frames": 3
+    },
+    {
+      "frame_id": 19,
+      "timestamp": 1.2666666666666666,
+      "valid": false,
+      "corners": null,
+      "distance_m": null,
+      "position_xyz": null,
+      "orientation_rpy": null,
+      "confidence": 0.0,
+      "state": "LOST",
+      "pose_valid": false,
+      "reason": "corner_anchor_lost",
+      "reprojection_error_px": null,
+      "tracked_points": 0,
+      "processing_ms": 5.2636999998867395,
+      "latency_ms": 12.859000000389642,
+      "detection_frame_id": 0,
+      "replayed_frames": 3
+    },
+    {
+      "frame_id": 20,
+      "timestamp": 1.3333333333333333,
+      "valid": false,
+      "corners": null,
+      "distance_m": null,
+      "position_xyz": null,
+      "orientation_rpy": null,
+      "confidence": 0.0,
+      "state": "LOST",
+      "pose_valid": false,
+      "reason": "corner_anchor_lost",
+      "reprojection_error_px": null,
+      "tracked_points": 0,
+      "processing_ms": 5.855499999597669,
+      "latency_ms": 13.077700000394543,
+      "detection_frame_id": 0,
+      "replayed_frames": 3
+    },
+    {
+      "frame_id": 21,
+      "timestamp": 1.4,
+      "valid": false,
+      "corners": null,
+      "distance_m": null,
+      "position_xyz": null,
+      "orientation_rpy": null,
+      "confidence": 0.0,
+      "state": "LOST",
+      "pose_valid": false,
+      "reason": "corner_anchor_lost",
+      "reprojection_error_px": null,
+      "tracked_points": 0,
+      "processing_ms": 6.008199999996577,
+      "latency_ms": 14.711699999679695,
+      "detection_frame_id": 0,
+      "replayed_frames": 3
+    },
+    {
+      "frame_id": 22,
+      "timestamp": 1.4666666666666666,
+      "valid": false,
+      "corners": null,
+      "distance_m": null,
+      "position_xyz": null,
+      "orientation_rpy": null,
+      "confidence": 0.0,
+      "state": "LOST",
+      "pose_valid": false,
+      "reason": "corner_anchor_lost",
+      "reprojection_error_px": null,
+      "tracked_points": 0,
+      "processing_ms": 6.387100000210921,
+      "latency_ms": 16.872799999873678,
+      "detection_frame_id": 0,
+      "replayed_frames": 3
+    },
+    {
+      "frame_id": 23,
+      "timestamp": 1.5333333333333334,
+      "valid": false,
+      "corners": null,
+      "distance_m": null,
+      "position_xyz": null,
+      "orientation_rpy": null,
+      "confidence": 0.0,
+      "state": "LOST",
+      "pose_valid": false,
+      "reason": "corner_anchor_lost",
+      "reprojection_error_px": null,
+      "tracked_points": 0,
+      "processing_ms": 7.134399999813468,
+      "latency_ms": 17.772100000001956,
+      "detection_frame_id": 0,
+      "replayed_frames": 3
+    },
+    {
+      "frame_id": 24,
+      "timestamp": 1.6,
+      "valid": false,
+      "corners": null,
+      "distance_m": null,
+      "position_xyz": null,
+      "orientation_rpy": null,
+      "confidence": 0.0,
+      "state": "LOST",
+      "pose_valid": false,
+      "reason": "corner_anchor_lost",
+      "reprojection_error_px": null,
+      "tracked_points": 0,
+      "processing_ms": 5.017700000280456,
+      "latency_ms": 14.513799999804178,
+      "detection_frame_id": 0,
+      "replayed_frames": 3
+    },
+    {
+      "frame_id": 25,
+      "timestamp": 1.6666666666666667,
+      "valid": false,
+      "corners": null,
+      "distance_m": null,
+      "position_xyz": null,
+      "orientation_rpy": null,
+      "confidence": 0.0,
+      "state": "LOST",
+      "pose_valid": false,
+      "reason": "corner_anchor_lost",
+      "reprojection_error_px": null,
+      "tracked_points": 0,
+      "processing_ms": 5.632199999126897,
+      "latency_ms": 12.235700000019278,
+      "detection_frame_id": 0,
+      "replayed_frames": 3
+    },
+    {
+      "frame_id": 26,
+      "timestamp": 1.7333333333333334,
+      "valid": false,
+      "corners": null,
+      "distance_m": null,
+      "position_xyz": null,
+      "orientation_rpy": null,
+      "confidence": 0.0,
+      "state": "LOST",
+      "pose_valid": false,
+      "reason": "corner_anchor_lost",
+      "reprojection_error_px": null,
+      "tracked_points": 0,
+      "processing_ms": 5.907200000365265,
+      "latency_ms": 13.241599999673781,
+      "detection_frame_id": 0,
+      "replayed_frames": 3
+    },
+    {
+      "frame_id": 27,
+      "timestamp": 1.8,
+      "valid": false,
+      "corners": null,
+      "distance_m": null,
+      "position_xyz": null,
+      "orientation_rpy": null,
+      "confidence": 0.0,
+      "state": "LOST",
+      "pose_valid": false,
+      "reason": "corner_anchor_lost",
+      "reprojection_error_px": null,
+      "tracked_points": 0,
+      "processing_ms": 4.895500000202446,
+      "latency_ms": 10.299199999280972,
+      "detection_frame_id": 0,
+      "replayed_frames": 3
+    },
+    {
+      "frame_id": 28,
+      "timestamp": 1.8666666666666667,
+      "valid": true,
+      "corners": [
+        [
+          620.4833984375,
+          155.29696655273438
+        ],
+        [
+          828.1377563476562,
+          214.59483337402344
+        ],
+        [
+          728.0452880859375,
+          491.64166259765625
+        ],
+        [
+          531.9945068359375,
+          461.44482421875
+        ]
+      ],
+      "distance_m": 0.8509943901051289,
+      "position_xyz": [
+        0.03697753915376739,
+        -0.02006563947220785,
+        0.849953812686962
+      ],
+      "orientation_rpy": [
+        0.2995434510282642,
+        -0.349842953792486,
+        0.2002602917931185
+      ],
+      "confidence": 0.9985468411585161,
+      "state": "TRACKING",
+      "pose_valid": true,
+      "reason": "reinitialized_from_slow",
+      "reprojection_error_px": 0.022128073913308646,
+      "tracked_points": 17,
+      "processing_ms": 36.52520000014192,
+      "latency_ms": 42.95720000027359,
+      "detection_frame_id": 27,
+      "replayed_frames": 1
+    },
+    {
+      "frame_id": 29,
+      "timestamp": 1.9333333333333333,
+      "valid": true,
+      "corners": [
+        [
+          620.4833984375,
+          155.29696655273438
+        ],
+        [
+          828.1377563476562,
+          214.59483337402344
+        ],
+        [
+          728.0452880859375,
+          491.64166259765625
+        ],
+        [
+          531.9945068359375,
+          461.44482421875
+        ]
+      ],
+      "distance_m": 0.8509943901051289,
+      "position_xyz": [
+        0.03697753915376739,
+        -0.02006563947220785,
+        0.849953812686962
+      ],
+      "orientation_rpy": [
+        0.2995434510282642,
+        -0.349842953792486,
+        0.2002602917931185
+      ],
+      "confidence": 1.0,
+      "state": "TRACKING",
+      "pose_valid": true,
+      "reason": "tracked",
+      "reprojection_error_px": 0.022128073913308646,
+      "tracked_points": 17,
+      "processing_ms": 16.616099999737344,
+      "latency_ms": 23.312600000281236,
+      "detection_frame_id": 27,
+      "replayed_frames": 1
+    },
+    {
+      "frame_id": 30,
+      "timestamp": 2.0,
+      "valid": true,
+      "corners": [
+        [
+          623.9824829101562,
+          155.3039093017578
+        ],
+        [
+          831.3202514648438,
+          214.59628295898438
+        ],
+        [
+          730.962158203125,
+          491.625244140625
+        ],
+        [
+          535.18310546875,
+          461.4410400390625
+        ]
+      ],
+      "distance_m": 0.8512039366469475,
+      "position_xyz": [
+        0.03998844621681534,
+        -0.020073050312168796,
+        0.8500271399100093
+      ],
+      "orientation_rpy": [
+        0.29946961881974515,
+        -0.34989133178316134,
+        0.20022494586024628
+      ],
+      "confidence": 1.0,
+      "state": "TRACKING",
+      "pose_valid": true,
+      "reason": "tracked",
+      "reprojection_error_px": 0.02637634570778043,
+      "tracked_points": 17,
+      "processing_ms": 15.683999999964726,
+      "latency_ms": 23.812700000235054,
+      "detection_frame_id": 27,
+      "replayed_frames": 1
+    },
+    {
+      "frame_id": 31,
+      "timestamp": 2.066666666666667,
+      "valid": true,
+      "corners": [
+        [
+          623.7748413085938,
+          154.93038940429688
+        ],
+        [
+          831.7188110351562,
+          214.3456268310547
+        ],
+        [
+          731.2059936523438,
+          491.9509582519531
+        ],
+        [
+          534.8026733398438,
+          461.7540283203125
+        ]
+      ],
+      "distance_m": 0.8491617970800299,
+      "position_xyz": [
+        0.039899514951173894,
+        -0.019968315218991534,
+        0.8479888281776842
+      ],
+      "orientation_rpy": [
+        0.3002979704574722,
+        -0.34888816006710593,
+        0.2000239827864673
+      ],
+      "confidence": 0.9985297663520087,
+      "state": "TRACKING",
+      "pose_valid": true,
+      "reason": "reinitialized_from_slow",
+      "reprojection_error_px": 0.04612819025280405,
+      "tracked_points": 16,
+      "processing_ms": 42.39969999980531,
+      "latency_ms": 48.92259999996895,
+      "detection_frame_id": 30,
+      "replayed_frames": 1
+    },
+    {
+      "frame_id": 32,
+      "timestamp": 2.1333333333333333,
+      "valid": true,
+      "corners": [
+        [
+          623.7748413085938,
+          154.93038940429688
+        ],
+        [
+          831.7188110351562,
+          214.3456268310547
+        ],
+        [
+          731.2059936523438,
+          491.9509582519531
+        ],
+        [
+          534.8026733398438,
+          461.7540283203125
+        ]
+      ],
+      "distance_m": 0.8491617970800299,
+      "position_xyz": [
+        0.039899514951173894,
+        -0.019968315218991534,
+        0.8479888281776842
+      ],
+      "orientation_rpy": [
+        0.3002979704574722,
+        -0.34888816006710593,
+        0.2000239827864673
+      ],
+      "confidence": 1.0,
+      "state": "TRACKING",
+      "pose_valid": true,
+      "reason": "tracked",
+      "reprojection_error_px": 0.04612819025280405,
+      "tracked_points": 16,
+      "processing_ms": 15.460200000234181,
+      "latency_ms": 22.20949999991717,
+      "detection_frame_id": 30,
+      "replayed_frames": 1
+    },
+    {
+      "frame_id": 33,
+      "timestamp": 2.2,
+      "valid": true,
+      "corners": [
+        [
+          627.2733154296875,
+          154.94171142578125
+        ],
+        [
+          834.8990478515625,
+          214.3603973388672
+        ],
+        [
+          734.1248779296875,
+          491.92059326171875
+        ],
+        [
+          537.9677734375,
+          461.7686767578125
+        ]
+      ],
+      "distance_m": 0.8493420531327183,
+      "position_xyz": [
+        0.04289582092099006,
+        -0.01996568408619519,
+        0.8480231383790101
+      ],
+      "orientation_rpy": [
+        0.3003953867531456,
+        -0.34905056108122495,
+        0.1999217849692861
+      ],
+      "confidence": 1.0,
+      "state": "TRACKING",
+      "pose_valid": true,
+      "reason": "tracked",
+      "reprojection_error_px": 0.05798867960707242,
+      "tracked_points": 16,
+      "processing_ms": 15.36359999954584,
+      "latency_ms": 22.480300000097486,
+      "detection_frame_id": 30,
+      "replayed_frames": 1
+    },
+    {
+      "frame_id": 34,
+      "timestamp": 2.2666666666666666,
+      "valid": true,
+      "corners": [
+        [
+          627.2733154296875,
+          154.94171142578125
+        ],
+        [
+          834.8990478515625,
+          214.3603973388672
+        ],
+        [
+          734.1248779296875,
+          491.92059326171875
+        ],
+        [
+          537.9677734375,
+          461.7686767578125
+        ]
+      ],
+      "distance_m": 0.8493420531327183,
+      "position_xyz": [
+        0.04289582092099006,
+        -0.01996568408619519,
+        0.8480231383790101
+      ],
+      "orientation_rpy": [
+        0.3003953867531456,
+        -0.34905056108122495,
+        0.1999217849692861
+      ],
+      "confidence": 1.0,
+      "state": "TRACKING",
+      "pose_valid": true,
+      "reason": "tracked",
+      "reprojection_error_px": 0.05798867960707242,
+      "tracked_points": 16,
+      "processing_ms": 17.336200000499957,
+      "latency_ms": 26.886800000283984,
+      "detection_frame_id": 30,
+      "replayed_frames": 1
+    },
+    {
+      "frame_id": 35,
+      "timestamp": 2.3333333333333335,
+      "valid": true,
+      "corners": [
+        [
+          627.2733154296875,
+          154.94171142578125
+        ],
+        [
+          834.8990478515625,
+          214.3603973388672
+        ],
+        [
+          734.1248779296875,
+          491.92059326171875
+        ],
+        [
+          537.9677734375,
+          461.7686767578125
+        ]
+      ],
+      "distance_m": 0.8493420531327183,
+      "position_xyz": [
+        0.04289582092099006,
+        -0.01996568408619519,
+        0.8480231383790101
+      ],
+      "orientation_rpy": [
+        0.3003953867531456,
+        -0.34905056108122495,
+        0.1999217849692861
+      ],
+      "confidence": 1.0,
+      "state": "TRACKING",
+      "pose_valid": true,
+      "reason": "tracked",
+      "reprojection_error_px": 0.05798867960707242,
+      "tracked_points": 16,
+      "processing_ms": 15.586800000164658,
+      "latency_ms": 22.867499999847496,
+      "detection_frame_id": 30,
+      "replayed_frames": 1
+    },
+    {
+      "frame_id": 36,
+      "timestamp": 2.4,
+      "valid": true,
+      "corners": [
+        [
+          630.747314453125,
+          154.93881225585938
+        ],
+        [
+          838.0933837890625,
+          214.35995483398438
+        ],
+        [
+          737.032470703125,
+          491.91497802734375
+        ],
+        [
+          541.1472778320312,
+          461.75006103515625
+        ]
+      ],
+      "distance_m": 0.8495544830118884,
+      "position_xyz": [
+        0.04588932590761509,
+        -0.019975166360191147,
+        0.8480789952016407
+      ],
+      "orientation_rpy": [
+        0.30036089821015793,
+        -0.34885415046509904,
+        0.19994549325091118
+      ],
+      "confidence": 1.0,
+      "state": "TRACKING",
+      "pose_valid": true,
+      "reason": "tracked",
+      "reprojection_error_px": 0.05237104455137755,
+      "tracked_points": 16,
+      "processing_ms": 14.925999999832129,
+      "latency_ms": 23.71130000028643,
+      "detection_frame_id": 30,
+      "replayed_frames": 1
+    },
+    {
+      "frame_id": 37,
+      "timestamp": 2.466666666666667,
+      "valid": true,
+      "corners": [
+        [
+          630.747314453125,
+          154.93881225585938
+        ],
+        [
+          838.0933837890625,
+          214.35995483398438
+        ],
+        [
+          737.032470703125,
+          491.91497802734375
+        ],
+        [
+          541.1472778320312,
+          461.75006103515625
+        ]
+      ],
+      "distance_m": 0.8495544830118884,
+      "position_xyz": [
+        0.04588932590761509,
+        -0.019975166360191147,
+        0.8480789952016407
+      ],
+      "orientation_rpy": [
+        0.30036089821015793,
+        -0.34885415046509904,
+        0.19994549325091118
+      ],
+      "confidence": 1.0,
+      "state": "TRACKING",
+      "pose_valid": true,
+      "reason": "tracked",
+      "reprojection_error_px": 0.05237104455137755,
+      "tracked_points": 16,
+      "processing_ms": 43.8321999999971,
+      "latency_ms": 55.33839999952761,
+      "detection_frame_id": 30,
+      "replayed_frames": 1
+    },
+    {
+      "frame_id": 38,
+      "timestamp": 2.533333333333333,
+      "valid": true,
+      "corners": [
+        [
+          630.747314453125,
+          154.93881225585938
+        ],
+        [
+          838.0933837890625,
+          214.35995483398438
+        ],
+        [
+          737.032470703125,
+          491.91497802734375
+        ],
+        [
+          541.1472778320312,
+          461.75006103515625
+        ]
+      ],
+      "distance_m": 0.8495544830118884,
+      "position_xyz": [
+        0.04588932590761509,
+        -0.019975166360191147,
+        0.8480789952016407
+      ],
+      "orientation_rpy": [
+        0.30036089821015793,
+        -0.34885415046509904,
+        0.19994549325091118
+      ],
+      "confidence": 1.0,
+      "state": "TRACKING",
+      "pose_valid": true,
+      "reason": "tracked",
+      "reprojection_error_px": 0.05237104455137755,
+      "tracked_points": 16,
+      "processing_ms": 44.23489999953745,
+      "latency_ms": 59.60439999944356,
+      "detection_frame_id": 30,
+      "replayed_frames": 1
+    },
+    {
+      "frame_id": 39,
+      "timestamp": 2.6,
+      "valid": true,
+      "corners": [
+        [
+          634.244873046875,
+          154.9441375732422
+        ],
+        [
+          841.2741088867188,
+          214.36746215820312
+        ],
+        [
+          739.9576416015625,
+          491.91741943359375
+        ],
+        [
+          544.2935180664062,
+          461.7715759277344
+        ]
+      ],
+      "distance_m": 0.8497153081076521,
+      "position_xyz": [
+        0.048881580413431325,
+        -0.0199678388289778,
+        0.8480730990553039
+      ],
+      "orientation_rpy": [
+        0.30027950355579724,
+        -0.3489459214326444,
+        0.19991763545653374
+      ],
+      "confidence": 1.0,
+      "state": "TRACKING",
+      "pose_valid": true,
+      "reason": "tracked",
+      "reprojection_error_px": 0.06157271350137625,
+      "tracked_points": 16,
+      "processing_ms": 22.73339999919699,
+      "latency_ms": 31.377299999803654,
+      "detection_frame_id": 30,
+      "replayed_frames": 1
+    },
+    {
+      "frame_id": 40,
+      "timestamp": 2.6666666666666665,
+      "valid": true,
+      "corners": [
+        [
+          634.244873046875,
+          154.9441375732422
+        ],
+        [
+          841.2741088867188,
+          214.36746215820312
+        ],
+        [
+          739.9576416015625,
+          491.91741943359375
+        ],
+        [
+          544.2935180664062,
+          461.7715759277344
+        ]
+      ],
+      "distance_m": 0.8497153081076521,
+      "position_xyz": [
+        0.048881580413431325,
+        -0.0199678388289778,
+        0.8480730990553039
+      ],
+      "orientation_rpy": [
+        0.30027950355579724,
+        -0.3489459214326444,
+        0.19991763545653374
+      ],
+      "confidence": 1.0,
+      "state": "TRACKING",
+      "pose_valid": true,
+      "reason": "tracked",
+      "reprojection_error_px": 0.06157271350137625,
+      "tracked_points": 16,
+      "processing_ms": 128.8643999996566,
+      "latency_ms": 139.69489999999496,
+      "detection_frame_id": 30,
+      "replayed_frames": 1
+    },
+    {
+      "frame_id": 42,
+      "timestamp": 2.8,
+      "valid": true,
+      "corners": [
+        [
+          637.70947265625,
+          154.95115661621094
+        ],
+        [
+          844.457275390625,
+          214.3677520751953
+        ],
+        [
+          742.8637084960938,
+          491.90899658203125
+        ],
+        [
+          547.4391479492188,
+          461.7820129394531
+        ]
+      ],
+      "distance_m": 0.8498807016093367,
+      "position_xyz": [
+        0.051859290423894915,
+        -0.019963031434882626,
+        0.8480620840130978
+      ],
+      "orientation_rpy": [
+        0.30039905892932245,
+        -0.34891642684232943,
+        0.19984418702896542
+      ],
+      "confidence": 1.0,
+      "state": "TRACKING",
+      "pose_valid": true,
+      "reason": "tracked",
+      "reprojection_error_px": 0.06445273911463556,
+      "tracked_points": 17,
+      "processing_ms": 33.36219999982859,
+      "latency_ms": 49.96410000057949,
+      "detection_frame_id": 30,
+      "replayed_frames": 1
+    },
+    {
+      "frame_id": 43,
+      "timestamp": 2.8666666666666667,
+      "valid": true,
+      "corners": [
+        [
+          637.70947265625,
+          154.95115661621094
+        ],
+        [
+          844.457275390625,
+          214.3677520751953
+        ],
+        [
+          742.8637084960938,
+          491.90899658203125
+        ],
+        [
+          547.4391479492188,
+          461.7820129394531
+        ]
+      ],
+      "distance_m": 0.8498807016093367,
+      "position_xyz": [
+        0.051859290423894915,
+        -0.019963031434882626,
+        0.8480620840130978
+      ],
+      "orientation_rpy": [
+        0.30039905892932245,
+        -0.34891642684232943,
+        0.19984418702896542
+      ],
+      "confidence": 1.0,
+      "state": "TRACKING",
+      "pose_valid": true,
+      "reason": "tracked",
+      "reprojection_error_px": 0.06445273911463556,
+      "tracked_points": 17,
+      "processing_ms": 26.957799999763665,
+      "latency_ms": 36.21639999983017,
+      "detection_frame_id": 30,
+      "replayed_frames": 1
+    },
+    {
+      "frame_id": 44,
+      "timestamp": 2.933333333333333,
+      "valid": true,
+      "corners": [
+        [
+          637.70947265625,
+          154.95115661621094
+        ],
+        [
+          844.457275390625,
+          214.3677520751953
+        ],
+        [
+          742.8637084960938,
+          491.90899658203125
+        ],
+        [
+          547.4391479492188,
+          461.7820129394531
+        ]
+      ],
+      "distance_m": 0.8498807016093367,
+      "position_xyz": [
+        0.051859290423894915,
+        -0.019963031434882626,
+        0.8480620840130978
+      ],
+      "orientation_rpy": [
+        0.30039905892932245,
+        -0.34891642684232943,
+        0.19984418702896542
+      ],
+      "confidence": 1.0,
+      "state": "TRACKING",
+      "pose_valid": true,
+      "reason": "tracked",
+      "reprojection_error_px": 0.06445273911463556,
+      "tracked_points": 17,
+      "processing_ms": 31.02770000077726,
+      "latency_ms": 42.9586999998719,
+      "detection_frame_id": 30,
+      "replayed_frames": 1
+    }
+  ]
+}

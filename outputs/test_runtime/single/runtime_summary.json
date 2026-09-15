@@ -1,0 +1,117 @@
+{
+  "config": {
+    "source": "outputs\\test_runtime\\input.avi",
+    "output": "outputs\\test_runtime\\single",
+    "headless": true,
+    "width": 1280,
+    "max_frames": 1,
+    "playback_speed": 1.0,
+    "history_size": 16,
+    "max_frame_gap": 5,
+    "slow_interval_s": 1.0,
+    "local_interval_s": 0.2,
+    "pose_reset_after": 3,
+    "save_every": 30,
+    "opencv_threads": 1
+  },
+  "original_size": [
+    1280,
+    720
+  ],
+  "working_size": [
+    1280,
+    720
+  ],
+  "coordinate_space": "undistorted_working_resolution",
+  "pose_error_limit_px": 5.0,
+  "interrupted": false,
+  "stop_requested": false,
+  "forced_termination": [],
+  "exit_codes": {
+    "Fast": 0,
+    "Slow": 0,
+    "Video": 0
+  },
+  "events": [
+    {
+      "worker": "Slow",
+      "pid": 100,
+      "event": "started"
+    },
+    {
+      "worker": "Fast",
+      "pid": 18812,
+      "event": "started"
+    },
+    {
+      "worker": "Video",
+      "pid": 25664,
+      "event": "started"
+    },
+    {
+      "worker": "Slow",
+      "pid": 100,
+      "event": "finished",
+      "stats": {
+        "requests": 1,
+        "detector_calls": 1
+      }
+    },
+    {
+      "worker": "Fast",
+      "pid": 18812,
+      "event": "finished",
+      "stats": {
+        "processed_frames": 1,
+        "valid_frames": 1,
+        "pose_valid_frames": 1,
+        "elapsed_s": 0.12131440000030125,
+        "working_size": [
+          1280,
+          720
+        ],
+        "camera_matrix": [
+          [
+            900.0,
+            0.0,
+            640.0
+          ],
+          [
+            0.0,
+            900.0,
+            360.0
+          ],
+          [
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "pose_error_limit_px": 5.0,
+        "coordinate_space": "undistorted_working_resolution",
+        "requests": 1,
+        "accepted_detections": 1,
+        "rejected_delayed_detections": 0,
+        "losses": 0,
+        "pose_resets": 0,
+        "skipped_source_frames": 0
+      }
+    },
+    {
+      "worker": "Video",
+      "pid": 25664,
+      "event": "finished",
+      "stats": {
+        "decoded_frames": 1,
+        "source_fps": 15.0,
+        "failed_frame_puts": 0,
+        "displayed_results": 2,
+        "elapsed_s": 0.13431999999920663
+      }
+    }
+  ],
+  "graphs": {
+    "status": "skipped",
+    "reason": "fewer_than_two_frames"
+  }
+}

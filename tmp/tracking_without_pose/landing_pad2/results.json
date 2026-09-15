@@ -1,0 +1,59 @@
+{
+  "source": "videos\\landing_pad2.mp4",
+  "camera_params": null,
+  "coordinate_space": "input_original_resolution",
+  "frame_size": [
+    3840,
+    2160
+  ],
+  "processed_frames": 1,
+  "valid_frames": 1,
+  "detection_attempts": 1,
+  "initializations": 1,
+  "tracking_losses": 0,
+  "detector_calls": 1,
+  "pose_enabled": false,
+  "pose_valid_frames": 0,
+  "pose_convention": null,
+  "tracker_frames": 0,
+  "frames": [
+    {
+      "frame_id": 0,
+      "timestamp_s": 0.0,
+      "valid": true,
+      "state": "TRACKING",
+      "source": "detector",
+      "reason": "initialized",
+      "tracking_failure": null,
+      "corners": [
+        [
+          1617.0,
+          1233.0
+        ],
+        [
+          1944.0,
+          1143.0
+        ],
+        [
+          2376.0,
+          1410.0
+        ],
+        [
+          2031.0,
+          1587.0
+        ]
+      ],
+      "num_points": 14,
+      "inlier_ratio": null,
+      "mean_lk_error": null,
+      "processing_ms": 199.96460000038496,
+      "tracking_ms": null,
+      "detection_ms": 178.2247000010102,
+      "pose": null,
+      "pose_ms": null,
+      "detection_scope": "global",
+      "x_check": null,
+      "preview_image": "tmp\\tracking_without_pose\\landing_pad2\\frame_000000.jpg"
+    }
+  ]
+}

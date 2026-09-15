@@ -1,0 +1,117 @@
+{
+  "config": {
+    "source": "outputs\\test_runtime\\input.avi",
+    "output": "outputs\\test_runtime\\cancel",
+    "headless": true,
+    "width": 1280,
+    "max_frames": 0,
+    "playback_speed": 0.2,
+    "history_size": 16,
+    "max_frame_gap": 5,
+    "slow_interval_s": 1.0,
+    "local_interval_s": 0.2,
+    "pose_reset_after": 3,
+    "save_every": 30,
+    "opencv_threads": 1
+  },
+  "original_size": [
+    1280,
+    720
+  ],
+  "working_size": [
+    1280,
+    720
+  ],
+  "coordinate_space": "undistorted_working_resolution",
+  "pose_error_limit_px": 5.0,
+  "interrupted": false,
+  "stop_requested": true,
+  "forced_termination": [],
+  "exit_codes": {
+    "Fast": 0,
+    "Slow": 0,
+    "Video": 0
+  },
+  "events": [
+    {
+      "worker": "Slow",
+      "pid": 10500,
+      "event": "started"
+    },
+    {
+      "worker": "Fast",
+      "pid": 23560,
+      "event": "started"
+    },
+    {
+      "worker": "Video",
+      "pid": 25136,
+      "event": "started"
+    },
+    {
+      "worker": "Video",
+      "pid": 25136,
+      "event": "finished",
+      "stats": {
+        "decoded_frames": 4,
+        "source_fps": 15.0,
+        "failed_frame_puts": 0,
+        "displayed_results": 4,
+        "elapsed_s": 1.2268278999999893
+      }
+    },
+    {
+      "worker": "Fast",
+      "pid": 23560,
+      "event": "finished",
+      "stats": {
+        "processed_frames": 4,
+        "valid_frames": 3,
+        "pose_valid_frames": 3,
+        "elapsed_s": 1.2982178000002023,
+        "working_size": [
+          1280,
+          720
+        ],
+        "camera_matrix": [
+          [
+            900.0,
+            0.0,
+            640.0
+          ],
+          [
+            0.0,
+            900.0,
+            360.0
+          ],
+          [
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "pose_error_limit_px": 5.0,
+        "coordinate_space": "undistorted_working_resolution",
+        "requests": 1,
+        "accepted_detections": 1,
+        "rejected_delayed_detections": 0,
+        "losses": 0,
+        "pose_resets": 0,
+        "skipped_source_frames": 0
+      }
+    },
+    {
+      "worker": "Slow",
+      "pid": 10500,
+      "event": "finished",
+      "stats": {
+        "requests": 1,
+        "detector_calls": 1
+      }
+    }
+  ],
+  "graphs": {
+    "status": "created",
+    "directory": "outputs\\test_runtime\\cancel\\graphs"
+  }
+}

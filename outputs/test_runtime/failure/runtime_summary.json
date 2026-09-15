@@ -1,0 +1,111 @@
+{
+  "config": {
+    "source": "outputs\\test_runtime\\input.avi",
+    "output": "outputs\\test_runtime\\failure",
+    "headless": true,
+    "width": 1280,
+    "max_frames": 0,
+    "playback_speed": 1.0,
+    "history_size": 16,
+    "max_frame_gap": 5,
+    "slow_interval_s": 1.0,
+    "local_interval_s": 0.2,
+    "pose_reset_after": 3,
+    "save_every": 30,
+    "opencv_threads": 1
+  },
+  "original_size": [
+    640,
+    360
+  ],
+  "working_size": [
+    640,
+    360
+  ],
+  "coordinate_space": "undistorted_working_resolution",
+  "pose_error_limit_px": 5.0,
+  "interrupted": false,
+  "stop_requested": true,
+  "forced_termination": [],
+  "exit_codes": {
+    "Fast": 0,
+    "Slow": 0,
+    "Video": 1
+  },
+  "events": [
+    {
+      "worker": "Fast",
+      "pid": 10256,
+      "event": "started"
+    },
+    {
+      "worker": "Slow",
+      "pid": 3432,
+      "event": "started"
+    },
+    {
+      "worker": "Video",
+      "pid": 20808,
+      "event": "started"
+    },
+    {
+      "worker": "Video",
+      "pid": 20808,
+      "event": "error",
+      "error": "Traceback (most recent call last):\n  File \"C:\\pythonLearn\\landing_pad_cv_skeleton\\processes\\supervision.py\", line 9, in worker_entry\n    stats = target(*args)\n  File \"C:\\pythonLearn\\landing_pad_cv_skeleton\\processes\\video_player.py\", line 62, in video_player_main\n    raise ValueError(f'Calibration size {original_size} != video {(frame.shape[1],frame.shape[0])}')\nValueError: Calibration size (640, 360) != video (1280, 720)\n"
+    },
+    {
+      "worker": "Fast",
+      "pid": 10256,
+      "event": "finished",
+      "stats": {
+        "processed_frames": 0,
+        "valid_frames": 0,
+        "pose_valid_frames": 0,
+        "elapsed_s": 0.10071960000004765,
+        "working_size": [
+          640,
+          360
+        ],
+        "camera_matrix": [
+          [
+            900.0,
+            0.0,
+            640.0
+          ],
+          [
+            0.0,
+            900.0,
+            360.0
+          ],
+          [
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "pose_error_limit_px": 5.0,
+        "coordinate_space": "undistorted_working_resolution",
+        "requests": 0,
+        "accepted_detections": 0,
+        "rejected_delayed_detections": 0,
+        "losses": 0,
+        "pose_resets": 0,
+        "skipped_source_frames": 0
+      }
+    },
+    {
+      "worker": "Slow",
+      "pid": 3432,
+      "event": "finished",
+      "stats": {
+        "requests": 0,
+        "detector_calls": 0
+      }
+    }
+  ],
+  "graphs": {
+    "status": "skipped",
+    "reason": "worker_failure_or_incomplete_output"
+  }
+}
