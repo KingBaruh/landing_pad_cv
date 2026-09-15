@@ -10,6 +10,24 @@ and embedded performance graphs. Its [editable source](docs/technical_report.md)
 and [experiment descriptions](docs/experiment_descriptions.md) include the complete
 v1 rerun (309 source frames, 289 processed frames, 253 accepted poses).
 
+## Download the experiment videos
+
+The eight experiment videos (`videos/v1.mp4` through `videos/v7.mp4` and
+`videos/v8_landing.mp4`) are stored using [Git LFS](https://git-lfs.com/).
+Install Git LFS, then run these commands from the cloned repository:
+
+```text
+git lfs install --local
+git lfs pull
+```
+
+The videos total approximately 352 MiB. A small text pointer in place of an MP4
+means the LFS content has not been downloaded. Use a Git clone with Git LFS;
+do not assume a source ZIP includes the actual videos.
+
+The matching `calibration/camera_params.npz` is still excluded from Git and must
+be supplied separately before running these videos with the calibrated system.
+
 ## Architecture
 
 - Video Player Process

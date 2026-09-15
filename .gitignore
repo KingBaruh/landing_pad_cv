@@ -6,6 +6,14 @@ calibration/images/*
 !calibration/images/.gitkeep
 videos/*
 !videos/.gitkeep
+!videos/v1.mp4
+!videos/v2.mp4
+!videos/v3.mp4
+!videos/v4.mp4
+!videos/v5.mp4
+!videos/v6.mp4
+!videos/v7.mp4
+!videos/v8_landing.mp4
 outputs/videos/*
 !outputs/videos/.gitkeep
 outputs/logs/*
