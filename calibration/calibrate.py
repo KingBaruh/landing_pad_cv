@@ -18,6 +18,9 @@ def calibrate_camera(images_dir: str, board_size=(9, 6), square_size=1.0,
     Detection can use a smaller image, but refinement and K use original pixels.
     radial_order controls how many radial terms (k1, k2, k3) are fitted.
     exclude_images contains explicitly reviewed, unusable image basenames.
+    The returned dictionary includes K, distortion, image/board metadata and
+    per-view RMS errors. Missing images, invalid settings or too few usable
+    views raise errors rather than returning placeholder calibration values.
     """
     if (len(board_size) != 2 or
             any(not isinstance(n, (int, np.integer)) or n < 2 for n in board_size)):
@@ -57,6 +60,8 @@ def calibrate_camera(images_dir: str, board_size=(9, 6), square_size=1.0,
         debug_path.mkdir(parents=True, exist_ok=True)
 
     # 1. Known 3D positions on the flat board. Every point has Z = 0.
+    # Scaling square_size changes board translation units, not intrinsic pixel
+    # units. A later A4 Pose fit gets its metre scale from the A4 model itself.
     columns, rows = board_size
     board_points = np.zeros((columns * rows, 3), dtype=np.float32)
     board_points[:, :2] = np.mgrid[0:columns, 0:rows].T.reshape(-1, 2)
@@ -176,6 +181,7 @@ def _write_png(path, frame):
 
 
 def save_camera_params(path: str, camera_matrix, dist_coeffs, **metadata):
+    """Write an NPZ with intrinsics, distortion and optional calibration metadata."""
     path_obj = Path(path)
     path_obj.parent.mkdir(parents=True, exist_ok=True)
     with path_obj.open("wb") as stream:
@@ -183,6 +189,11 @@ def save_camera_params(path: str, camera_matrix, dist_coeffs, **metadata):
 
 
 def load_camera_params(path: str):
+    """Load an NPZ without pickle; return empty intrinsics when the file is absent.
+
+    Callers must validate required fields before starting a calibrated run.
+    Corrupt or unreadable files propagate their loading error.
+    """
     path_obj = Path(path)
     if not path_obj.exists():
         # Keep the skeleton runnable enough to fail clearly.

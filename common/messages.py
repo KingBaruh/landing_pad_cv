@@ -5,6 +5,11 @@ import numpy as np
 
 @dataclass
 class FrameMessage:
+    """A resized frame with source ID/time and a separate wall-clock origin.
+
+    Video sends raw frames; Fast creates an undistorted copy before handing
+    the message to tracking/history. Both versions retain the same source ID.
+    """
     frame_id: int
     timestamp: float                 # source time, seconds
     frame: np.ndarray
@@ -24,6 +29,7 @@ class DetectionRequest:
 
 @dataclass
 class DetectionResult:
+    """Slow's answer for its input frame, not necessarily Fast's latest frame."""
     frame_id: int
     timestamp: float
     valid: bool
@@ -36,6 +42,12 @@ class DetectionResult:
 
 @dataclass
 class FastResult:
+    """Tracking/Pose metadata paired with the exact image used to compute it.
+
+    valid describes tracking; pose_valid separately describes the metric fit.
+    Position/distance are in metres, orientation_rpy is in radians, and
+    reprojection_error_px uses the undistorted working image's pixel scale.
+    """
     frame_id: int
     timestamp: float
     valid: bool

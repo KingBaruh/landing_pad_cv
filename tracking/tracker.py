@@ -27,6 +27,12 @@ class LandingPadTracker:
 
     def __init__(self, *, max_width=1280, min_points=6, max_points=150,
                  min_inlier_ratio=.5, max_fb_error=1.5, max_lk_error=25.):
+        """Set support and consistency limits for the grayscale working image.
+
+        max_fb_error is a displacement in working pixels. max_lk_error limits
+        OpenCV's patch appearance error, not a geometric pixel displacement.
+        min_inlier_ratio is the fraction of matches supporting the homography.
+        """
         if (max_width < 100 or not 4 <= min_points <= max_points or
                 not 0 < min_inlier_ratio <= 1 or max_fb_error <= 0 or max_lk_error <= 0):
             raise ValueError('Invalid tracker limits.')
@@ -103,12 +109,17 @@ class LandingPadTracker:
                 np.all(corners[:, 0] < width-1) and np.all(corners[:, 1] < height-1))
 
     def _lost(self, reason, num_points=0, ratio=0., error=float('inf')):
+        """Reset state and return diagnostic failure data without stale corners."""
         x_check = self.last_x_check
         self.reset()
         return TrackingOutput(False, None, num_points, ratio, error, reason, x_check)
 
     def initialize(self, frame, corners) -> bool:
-        """Seed four observed paper corners plus Harris features; return success."""
+        """Seed observed corners and Harris features on their detection frame.
+
+        corners must use this input frame's pixels. Reset any previous track;
+        return False if the image, boundary or feature support is unsuitable.
+        """
         self.reset()
         try:
             gray = self._gray(frame)
@@ -141,6 +152,11 @@ class LandingPadTracker:
         return True
 
     def update(self, frame) -> TrackingOutput:
+        """Track the next frame and return corners in input-frame pixels.
+
+        A failed consistency/geometry/X check resets the tracker and returns
+        valid=False with a reason. Detection must initialize it again to resume.
+        """
         self.last_x_check = None
         if not self.initialized:
             return self._lost('not_initialized')
@@ -192,6 +208,8 @@ class LandingPadTracker:
         if np.linalg.norm(projected_anchors-after[:4, 0], axis=1).max() > 1.5:
             H = cv2.getPerspectiveTransform(self.reference_corners, after[:4, 0])
         projected = cv2.perspectiveTransform(reference, H)
+        # This 2.5-working-pixel support gate is looser than the 1.5-pixel fit
+        # gate, allowing small residuals while checking every corner anchor.
         inliers = np.linalg.norm(projected-after, axis=(1, 2)) <= 2.5
         if not inliers[:4].all():
             return self._lost('corner_model_disagreement')
@@ -209,6 +227,8 @@ class LandingPadTracker:
             return self._lost('invalid_projection', count, ratio, mean_error)
         old_area = cv2.contourArea(old_corners, oriented=True)
         new_area = cv2.contourArea(new_corners, oriented=True)
+        # Area ratios and motion relative to sqrt(area) are scale-relative
+        # jump guards, not limits on the real camera's speed or distance.
         if (not self._inside(new_corners, gray.shape) or not cv2.isContourConvex(new_corners) or
                 not .6 <= new_area/old_area <= 1.6 or
                 np.linalg.norm(new_corners-old_corners, axis=1).max() > .4*np.sqrt(abs(old_area))):
@@ -247,6 +267,8 @@ class LandingPadTracker:
             old_count = len(points)
             points = self._features(gray, new_corners, points)
             if len(points) > old_count:
+                # New points need coordinates in the original reference plane
+                # so future fits keep using the same reference-to-current H.
                 added_reference = cv2.perspectiveTransform(points[old_count:], np.linalg.inv(H))
                 reference = np.concatenate((reference, added_reference))
         self.prev_gray = gray.copy()

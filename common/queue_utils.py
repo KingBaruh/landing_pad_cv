@@ -2,7 +2,12 @@ from queue import Empty, Full
 
 
 def put_latest(queue, item):
-    """Keep latency low by dropping stale queued data when necessary."""
+    """Try to enqueue current image data without blocking; return success.
+
+    Drop one queued item if full. Multiprocessing feeder/consumer races can
+    still make the retry fail, so this is best effort, not guaranteed delivery.
+    Use put_reliable for requests, replies and end-of-stream sentinels.
+    """
     try:
         queue.put_nowait(item)
         return True
@@ -22,7 +27,11 @@ def put_latest(queue, item):
 
 
 def put_reliable(queue, item, stop):
-    """Control messages/requests must not be silently dropped with image data."""
+    """Retry delivery until queued (True) or cancellation is observed (False).
+
+    Short timeouts let the caller notice stop while another worker is stalled;
+    control messages must not use the image queue's deliberate drop policy.
+    """
     while not stop.is_set():
         try:
             queue.put(item, timeout=.1)

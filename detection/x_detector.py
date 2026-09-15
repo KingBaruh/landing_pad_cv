@@ -33,6 +33,8 @@ def detect_x(rectified_image, *, diagnostics=None):
     if min(gray.shape) < 24:
         return reject('image_too_small')
 
+    # The marker tests below use this normalized crop, not source-frame pixels.
+    # These tolerances therefore keep the same meaning as the pad changes size.
     size = 200
     gray = cv2.resize(gray, (size, size), interpolation=cv2.INTER_AREA)
     gray = cv2.GaussianBlur(gray, (3, 3), 0)
@@ -162,6 +164,8 @@ def _verify_mask(dark, diagnostics):
             crossing_distance = float(distance_to_dark[cy, cx])
             centrality = max(0., 1-float(np.linalg.norm(crossing-99.5))/60)
             strength = min(1., min(length_a, length_b)/185)
+            # This weighted score ranks candidates. The separate hard checks
+            # below still require all arms, concentrated ink and a dark crossing.
             score = float(.25*strength + .35*min(arm_scores) + .25*explained + .15*centrality)
             reason = None
             if min(arm_scores) < .70:

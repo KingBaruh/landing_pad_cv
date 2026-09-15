@@ -13,6 +13,7 @@ from processes.runtime_engine import FastEngine
 
 
 def record(result):
+    """Convert result metadata to JSON-compatible values, excluding image data."""
     return {field.name: (value.tolist() if isinstance(value, np.ndarray) else value)
             for field in fields(result) if field.name != 'frame'
             for value in [getattr(result, field.name)]}
@@ -20,7 +21,15 @@ def record(result):
 
 def fast_process_main(frame_queue, request_queue, detection_queue, result_queue,
                       K, dist, size, pose_limit, config, stop, ready):
+    """Consume resized raw frames, produce matching results and save run metrics.
+
+    K and pose_limit use working pixels. None on the input queue marks EOF;
+    the shared stop event supports cancellation. Return summary counters after
+    writing per-frame JSON/CSV results to the prepared output directory.
+    """
     cv2.setNumThreads(config.opencv_threads)
+    # Lens geometry stays fixed throughout the run, so compute these maps
+    # once. Keeping K as the output camera matrix simplifies downstream Pose.
     maps = cv2.initUndistortRectifyMap(K, dist, None, K, size, cv2.CV_32FC1)
     engine = FastEngine(K, pose_limit, config)
     rows = {}
@@ -42,6 +51,8 @@ def fast_process_main(frame_queue, request_queue, detection_queue, result_queue,
                 raise ValueError('Unexpected working frame size.')
             msg = FrameMessage(raw.frame_id, raw.timestamp,
                                cv2.remap(raw.frame, *maps, cv2.INTER_LINEAR), raw.captured_at)
+            # All downstream frames are now undistorted. FastEngine and Slow
+            # use K with zero/None distortion to avoid correcting points twice.
             engine.advance(msg)
             try:
                 detection = detection_queue.get_nowait()
@@ -71,6 +82,8 @@ def fast_process_main(frame_queue, request_queue, detection_queue, result_queue,
             if engine.accept(detection):
                 result = engine.result(count_rejection=False)
                 result.processing_ms = (perf_counter()-start)*1000
+                # Replace the final frame's record rather than inventing an
+                # extra frame when its delayed correction arrives after EOF.
                 rows[result.frame_id] = record(result)
                 put_latest(result_queue, result)
         put_reliable(request_queue, None, stop)

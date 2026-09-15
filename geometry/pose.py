@@ -5,6 +5,11 @@ import numpy as np
 
 @dataclass
 class PoseOutput:
+    """A validated object-to-camera pose, or empty pose fields with a reason.
+
+    Translation is in metres; orientation_rpy contains radians. Ambiguity flags
+    describe alternative image-consistent orientations, not tracking failures.
+    """
     valid: bool
     position_xyz: np.ndarray | None
     distance_m: float | None
@@ -18,6 +23,8 @@ class PoseOutput:
     yaw_ambiguous_180: bool = True
 
 
+# The model origin is the sheet centre, so tvec directly locates that centre.
+# Known A4 dimensions supply metric scale even if calibration used square units.
 A4_OBJECT_POINTS = np.array(
     [
         [-0.105, -0.1485, 0.0],
@@ -63,6 +70,10 @@ def estimate_pose(corners, camera_matrix, dist_coeffs, *, previous=None,
     A previous valid pose selects a nearby orientation only among fits within
     0.25 px RMS of the best; this is continuity, not independent evidence.
     Reset previous after tracking loss. Invalid results contain no stale pose.
+
+    Both RMS and its threshold use the same pixel scale as corners and K.
+    Bad camera parameters/thresholds raise ValueError; unusable observations
+    or rejected fits return an invalid PoseOutput with a diagnostic reason.
     """
     def invalid(reason, error=None):
         return PoseOutput(False, None, None, None, error, reason=reason)
@@ -120,15 +131,21 @@ def estimate_pose(corners, camera_matrix, dist_coeffs, *, previous=None,
                     continue
                 R = cv2.Rodrigues(rv)[0]
                 camera_points = A4_OBJECT_POINTS @ R.T + tv.reshape(3)
+                # A low image residual is insufficient if any model corner
+                # lies behind, or effectively on, the camera plane (metres).
                 if np.any(camera_points[:, 2] <= 1e-6):
                     continue
                 projected = cv2.projectPoints(A4_OBJECT_POINTS, rv, tv, K, dist)[0].reshape(4, 2)
             except cv2.error:
                 continue
+            # RMS of four Euclidean pixel residuals, not a physical distance
+            # error. A biased calibration can still produce a small residual.
             error = float(np.sqrt(np.mean(np.sum((projected-image_points)**2, axis=1))))
             if not np.isfinite(error):
                 continue
             candidates.append((error, R, rv, tv, ids.copy()))
+            # A half-turn swaps opposite corners without changing the observed
+            # rectangle/X. Preserve this equivalent orientation for continuity.
             flipped = R @ half_turn
             candidates.append((error, flipped, cv2.Rodrigues(flipped)[0], tv, np.roll(ids, -2)))
     if not candidates:
@@ -145,6 +162,8 @@ def estimate_pose(corners, camera_matrix, dist_coeffs, *, previous=None,
         best = [c for c in candidates if c[0] <= min(best_error+1e-7, max_reprojection_error_px)]
         chosen = min(best, key=lambda c: abs(rotation_to_rpy(c[1])[2]))
     error, R, rv, tv, ids = chosen
+    # Flag distinct near-best orientations beyond the unavoidable half-turn.
+    # Five degrees is an ambiguity-reporting threshold, not an accuracy claim.
     ambiguous = any(min(_rotation_distance(R, c[1]),
                         _rotation_distance(R, c[1] @ half_turn)) > np.deg2rad(5)
                     for c in close)

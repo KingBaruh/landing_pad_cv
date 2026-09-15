@@ -10,6 +10,11 @@ from common.drawing import draw_fast_result
 
 def video_player_main(frame_queue, result_queue, original_size, working_size,
                       config, stop, fast_ready, slow_ready):
+    """Read a video/camera, send resized frames to Fast and display its results.
+
+    Sizes are (width, height). Raw input must match the calibration dimensions.
+    Return decoding/display counters; raise on capture or preview-save errors.
+    """
     cv2.setNumThreads(config.opencv_threads)
     while not (fast_ready.is_set() and slow_ready.is_set()):
         if stop.wait(.05):
@@ -67,9 +72,13 @@ def video_player_main(frame_queue, result_queue, original_size, working_size,
                 stop.wait(min(.005,max(0,due-monotonic())))
             if stop.is_set():
                 break
+            # Latency begins after decoding and playback pacing, before resize.
+            # It therefore excludes decoder time and is not display latency.
             captured_at = monotonic()
             if working_size != original_size:
                 frame = cv2.resize(frame,working_size,interpolation=cv2.INTER_AREA)
+            # Source time stays index/fps even when playback is slower or faster;
+            # monotonic wall time is a separate clock used for measurements.
             msg = FrameMessage(index,index/fps,frame,captured_at)
             rejected_puts += int(not put_latest(frame_queue,msg))
             consume()
@@ -82,6 +91,8 @@ def video_player_main(frame_queue, result_queue, original_size, working_size,
             index += 1
         if index == 0 and not stop.is_set():
             raise ValueError('Video contains no readable frames.')
+        # EOF must reach Fast even if its input queue is full. Keep consuming
+        # results until Fast acknowledges completion with its own sentinel.
         put_reliable(frame_queue,None,stop)
         while not ended and not stop.is_set():
             consume()

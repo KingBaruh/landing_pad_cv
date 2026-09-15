@@ -10,6 +10,12 @@ from common.queue_utils import put_reliable
 
 def slow_process_main(request_queue, result_queue, camera_matrix, pose_limit,
                       config, stop, ready):
+    """Detect on requested undistorted frames and reply with their source IDs.
+
+    camera_matrix and pose_limit use the supplied working-image coordinates.
+    Every completed request gets a reply, including unsuccessful detections;
+    None ends the stream. Return request and detector-call counts at shutdown.
+    """
     cv2.setNumThreads(config.opencv_threads)
     detector = SlowDetector(camera_matrix=camera_matrix, max_pose_error_px=pose_limit)
     ready.set()
@@ -27,6 +33,8 @@ def slow_process_main(request_queue, result_queue, camera_matrix, pose_limit,
                 request.frame, detector, request.last_corners, allow_global=request.allow_global)
             requests += 1
             calls += count
+            # Keep the original ID/time: Fast must replay a delayed detection
+            # before using its corners on a newer frame.
             result = DetectionResult(request.frame_id, request.timestamp, detected.valid,
                                      detected.corners, detected.confidence, scope, count,
                                      (perf_counter()-start)*1000)

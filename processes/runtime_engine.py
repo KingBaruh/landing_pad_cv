@@ -8,6 +8,12 @@ from tracking.tracker import LandingPadTracker
 
 
 class FastEngine:
+    """Own tracking state and delayed-detection history inside the Fast worker.
+
+    Frames, corners, K and pose_limit share undistorted working-image pixels.
+    Source timestamps schedule searches; wall-clock timers measure their cost.
+    """
+
     def __init__(self, K, pose_limit, config):
         self.K, self.pose_limit, self.config = K, pose_limit, config
         self.tracker = LandingPadTracker()
@@ -29,6 +35,7 @@ class FastEngine:
         self.detection_events = []
 
     def lose(self, reason):
+        """Clear the active track and Pose prior while keeping the last search ROI."""
         if self.tracker.initialized:
             self.stats['losses'] += 1
         self.tracker.reset()
@@ -38,11 +45,18 @@ class FastEngine:
         self.confidence, self.points = 0.0, 0
 
     def advance(self, msg):
+        """Store the next undistorted frame and advance an existing track.
+
+        Reject non-increasing source IDs. Tracking failures clear the active
+        state; this method does not run detection or estimate the current Pose.
+        """
         if self.history:
             gap = msg.frame_id-next(reversed(self.history))
             if gap <= 0:
                 raise ValueError('Fast frames must have strictly increasing IDs.')
             self.stats['skipped_source_frames'] += gap-1
+            # LK assumes limited motion between observations. A large source
+            # gap can invalidate that assumption even if the queue is short.
             if gap > self.config.max_frame_gap:
                 self.lose('frame_gap_too_large')
         self.history[msg.frame_id] = msg
@@ -59,9 +73,14 @@ class FastEngine:
                 self.lose(tracked.reason)
 
     def request(self):
+        """Return a due DetectionRequest, or None; sent() records actual delivery."""
+        # One outstanding request bounds Slow's backlog and makes reply/source
+        # matching explicit, even while Fast continues receiving newer frames.
         if self.pending_id is not None or not self.history:
             return None
         msg = next(reversed(self.history.values()))
+        # These deadlines use source seconds, so playback speed does not
+        # silently change which parts of a video get scheduled for detection.
         full = msg.timestamp >= self.next_full
         recent = (self.last_valid_time is not None and
                   0 <= msg.timestamp-self.last_valid_time <= self.config.slow_interval_s)
@@ -72,6 +91,7 @@ class FastEngine:
                                 full, self.state, self.reason)
 
     def sent(self, request):
+        """Advance search deadlines only after the request has entered its queue."""
         self.pending_id = request.frame_id
         self.next_local = request.timestamp+self.config.local_interval_s
         if request.allow_global:
@@ -83,6 +103,8 @@ class FastEngine:
 
         Negative/stale/unusable slow results never overwrite a healthy track.
         The temporary tracker is installed only after successful catch-up/Pose.
+        Return True only when that replacement is installed; log other replies
+        with their rejection reason and return False.
         """
         start = perf_counter()
         event = dict(source_frame=detection.frame_id,
@@ -97,6 +119,8 @@ class FastEngine:
             return False
         if detection.frame_id != self.pending_id:
             return reject('unexpected_request_id')
+        # A matching negative reply also completes the request. Otherwise a
+        # failed detection would leave future searches blocked indefinitely.
         self.pending_id = None
         if not detection.valid:
             return reject('no_detection')
@@ -105,6 +129,8 @@ class FastEngine:
             return reject('source_frame_expired')
         if abs(source.timestamp-detection.timestamp) > 1e-6:
             return reject('timestamp_mismatch')
+        # Test the correction on a separate tracker. Applying old corners
+        # directly to the newest image would mix different points in time.
         candidate = LandingPadTracker()
         if not candidate.initialize(source.frame, detection.corners):
             return reject('initialization_failed')
@@ -137,12 +163,20 @@ class FastEngine:
         return True
 
     def result(self, processing_ms=0.0, *, count_rejection=True):
+        """Build a FastResult for the latest frame, with a freshly checked Pose.
+
+        Tracking validity and Pose validity are separate. Invalid Pose fields
+        contain None. At EOF, count_rejection=False avoids counting a second
+        evaluation of the last frame as another consecutive failed frame.
+        """
         msg = next(reversed(self.history.values()))
         valid = self.tracker.initialized
         corners = self.tracker.corners.copy() if valid else None
         pose = estimate_pose(corners, self.K, None, previous=self.previous_pose,
                              max_reprojection_error_px=self.pose_limit)
         self.previous_pose = pose if pose.valid else None
+        # One bad fit can be transient. Consecutive failures trigger recovery
+        # even when optical flow still reports a geometrically plausible track.
         if count_rejection:
             self.rejection_streak = self.rejection_streak+1 if valid and not pose.valid else 0
         if self.rejection_streak >= self.config.pose_reset_after:

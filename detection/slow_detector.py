@@ -54,6 +54,12 @@ class DetectionOutput:
 
 
 class SlowDetector:
+    """Find contour-based quadrilaterals and verify their X and optional A4 fit.
+
+    Candidate generation uses a reduced image. Public corners and Pose gates
+    use the supplied image's pixel scale; diagnostic buffers belong to this
+    instance and are replaced on each detect() call.
+    """
     def __init__(self, *, max_width=1280, min_area_ratio=0.0005,
                  min_area_px=180, max_candidates=100, camera_matrix=None,
                  dist_coeffs=None, max_pose_error_px=5.):
@@ -132,6 +138,8 @@ class SlowDetector:
                 masks.append(cv2.morphologyEx(mask, cv2.MORPH_OPEN,
                                              np.ones((size, size), np.uint8)))
 
+        # Combine a working-pixel area floor with a fraction of the current
+        # search image. This also applies when recovery supplies a cropped ROI.
         minimum = max(self.min_area_px, gray.size*self.min_area_ratio)
         contours = []
         for mask in masks:

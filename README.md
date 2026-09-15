@@ -2,7 +2,7 @@
 
 Classical OpenCV solution for detecting, tracking, and estimating the pose of an A4 landing pad marked with a large black X.
 
-להתקנה ולהרצה מלאה של העבודה, ראו [הוראות הרצה](RUNNING.md).
+For installation and full runtime instructions, see the [run guide](RUNNING.md).
 
 The consolidated Hebrew [technical report](docs/technical_report.html) includes
 architecture, algorithms, synchronization, run instructions, eight experiments,
@@ -28,7 +28,7 @@ v1 rerun (309 source frames, 289 processed frames, 253 accepted poses).
 7. Split into three processes
 8. Metrics, test videos, and documentation
 
-## חלק 1 - כיול וזיהוי המשטח
+## Part 1 - Camera calibration and landing pad detection
 
 ### Run camera calibration
 
@@ -71,7 +71,7 @@ python -m detection.demo --video videos/landing_pad.mp4 --camera-params calibrat
 Supply your own `videos/landing_pad.mp4`. The existing checkerboard videos are
 negative examples for X detection, so `Invalid` is expected on them.
 
-## חלק 2 - מעקב וחישוב Pose
+## Part 2 - Tracking and pose estimation
 
 The slow detector, X verification, corner ordering and perspective rectification
 are implemented. This part adds a classical Harris/Lucas-Kanade tracker,
@@ -86,7 +86,7 @@ every frame and redetects after loss. Metric A4 pose is now available with
 `--pose` and matching `--camera-params`; see `geometry/README.md` for conventions,
 validation and limitations.
 
-## חלק 3 - הרצה בשלושה תהליכים
+## Part 3 - Three-process runtime
 
 ```powershell
 python main.py --video videos/landing_pad_test.mp4

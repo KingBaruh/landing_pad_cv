@@ -19,7 +19,11 @@ from processes.supervision import worker_entry
 
 
 def _prepare_camera_parameters(config, params):
-    """Scale calibration and the Pose error limit to the working image size."""
+    """Return original/working sizes, scaled K, distortion and a pixel error limit.
+
+    Sizes are (width, height). The saved calibration must match the original
+    capture mode; resizing does not compensate for a different lens or crop.
+    """
     original_size = tuple(int(value) for value in params['image_size'])
     resize_scale = min(1.0, config.width / original_size[0])
     working_size = (
@@ -29,16 +33,21 @@ def _prepare_camera_parameters(config, params):
 
     width_scale = working_size[0] / original_size[0]
     height_scale = working_size[1] / original_size[1]
+    # Focal lengths and principal point are measured in pixels. Scale each
+    # image axis separately because rounding can slightly change the ratio.
     camera_matrix = np.array(params['camera_matrix'], dtype=float, copy=True)
     camera_matrix[0] *= width_scale
     camera_matrix[1] *= height_scale
+    # Distortion coefficients describe normalized camera coordinates and do
+    # not scale with image dimensions.
     distortion_coefficients = np.asarray(params['dist_coeffs'], dtype=float)
 
     if (not np.isfinite(camera_matrix).all()
             or not np.isfinite(distortion_coefficients).all()):
         raise ValueError('Calibration contains nonfinite values.')
 
-    # Preserve the 5-original-pixel acceptance limit after resizing.
+    # Express the 5-original-pixel gate in working pixels (1.667 at one third
+    # size). The smaller axis scale keeps the scalar gate conservative.
     pose_error_limit = AppConfig().max_reprojection_error_px * min(width_scale, height_scale)
     return original_size, working_size, camera_matrix, distortion_coefficients, pose_error_limit
 
@@ -139,7 +148,12 @@ def _export_performance_graphs(output_directory, report, events, exit_code):
 
 
 def run(config, params, stop_event=None):
-    """Start the three workers, supervise them, save results, then create graphs."""
+    """Run three workers using RuntimeConfig and loaded calibration parameters.
+
+    Supervise shutdown and export graphs after workers save their results.
+    Return 0 on success, 130 on keyboard interruption, or 1 on a reported
+    worker/export failure. Setup and supervisory exceptions can propagate.
+    """
     (
         original_size,
         working_size,
@@ -154,7 +168,8 @@ def run(config, params, stop_event=None):
     fast_ready = context.Event()
     slow_ready = context.Event()
 
-    # The queue names show the direction of each message stream.
+    # Bound image queues to prevent an ever-growing backlog. Frame/display
+    # traffic may be dropped; requests, replies and EOF use reliable delivery.
     frame_queue = context.Queue(maxsize=1)          # Video -> Fast
     detection_request_queue = context.Queue(maxsize=1)  # Fast -> Slow
     detection_result_queue = context.Queue(maxsize=1)   # Slow -> Fast

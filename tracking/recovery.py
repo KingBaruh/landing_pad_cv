@@ -49,6 +49,8 @@ def detect_for_recovery(frame, detector, last_corners=None, *, allow_global=True
             x0, y0 = np.floor(np.maximum(lo-margin, 0)).astype(int)
             x1, y1 = np.ceil(np.minimum(hi+margin, [width, height])).astype(int)
             if x1-x0 >= 24 and y1-y0 >= 24 and (x1-x0)*(y1-y0) < .9*width*height:
+                # Pose validation uses full-image K, so the detector needs the
+                # crop origin. Returned ROI corners are shifted back only here.
                 options = {'pixel_offset': (x0,y0)} if detector.camera_matrix is not None else {}
                 result = detector.detect(frame[y0:y1, x0:x1], **options)
                 calls += 1

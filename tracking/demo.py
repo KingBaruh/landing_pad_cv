@@ -1,8 +1,8 @@
-﻿"""Sequential tracker exercise for חלק 2: python -m tracking.demo --help.
+﻿"""Sequential tracker exercise for Part 2: python -m tracking.demo --help.
 
 Processes every frame; --save-every only controls saved preview images.
 Use --pose with matching calibration for metric A4 pose estimation.
-This is an offline runner; the three-process application is main.py in חלק 3.
+This is an offline runner; the three-process application is main.py in Part 3.
 """
 import argparse
 import json
