@@ -2,6 +2,8 @@
 
 Classical OpenCV solution for detecting, tracking, and estimating the pose of an A4 landing pad marked with a large black X.
 
+להתקנה ולהרצה מלאה של העבודה, ראו [הוראות הרצה](RUNNING.md).
+
 The consolidated Hebrew [technical report](docs/technical_report.html) includes
 architecture, algorithms, synchronization, run instructions, eight experiments,
 and embedded performance graphs. Its [editable source](docs/technical_report.md)
@@ -26,10 +28,34 @@ v1 rerun (309 source frames, 289 processed frames, 253 accepted poses).
 7. Split into three processes
 8. Metrics, test videos, and documentation
 
-## Day 1: calibration and detection
+## חלק 1 - כיול וזיהוי המשטח
+
+### Run camera calibration
+
+From the project root, with the virtual environment active, install the dependencies if needed:
+
+```text
+python -m pip install -r requirements.txt
+```
+
+To reproduce the calibration using the existing checkerboard images in `calibration/images` and the settings selected for this project:
+
+```text
+python calibration/calibrate.py --square-size 1 --radial-order 1 --exclude frame_00660.png frame_00990.png
+```
+
+- `--square-size 1` uses an arbitrary square unit, as used when calibrating with a checkerboard displayed on a screen.
+- `--radial-order 1` fits one radial distortion coefficient in addition to the tangential distortion coefficients.
+- `--exclude` skips the two images selected for exclusion during calibration review. For a new image set, review which images should be excluded.
+- The default checkerboard size is 9 by 6 inner corners, not squares.
+
+The program prints the RMS reprojection error, camera matrix and distortion coefficients. Parameters are saved to `calibration/camera_params.npz`, and diagnostic images are saved under `calibration/debug/`. This command overwrites the existing parameter file; to save a separate file, add `--output calibration/camera_params_recomputed.npz`.
+
+The runtime loads the saved parameters, so calibration does not need to be repeated for every run. See the [calibration documentation](calibration/README.md) for details.
+
+### Run detection
 
 ```bash
-pip install -r requirements.txt
 python -m detection.demo --image outputs/detection_examples/pad_perspective.png
 ```
 
@@ -45,8 +71,10 @@ python -m detection.demo --video videos/landing_pad.mp4 --camera-params calibrat
 Supply your own `videos/landing_pad.mp4`. The existing checkerboard videos are
 negative examples for X detection, so `Invalid` is expected on them.
 
+## חלק 2 - מעקב וחישוב Pose
+
 The slow detector, X verification, corner ordering and perspective rectification
-are implemented. Day 2 also has a classical Harris/Lucas-Kanade tracker,
+are implemented. This part adds a classical Harris/Lucas-Kanade tracker,
 RANSAC homography updates and a continuous-video exercise:
 
 ```powershell
@@ -58,7 +86,7 @@ every frame and redetects after loss. Metric A4 pose is now available with
 `--pose` and matching `--camera-params`; see `geometry/README.md` for conventions,
 validation and limitations.
 
-## Day 3: three-process runtime
+## חלק 3 - הרצה בשלושה תהליכים
 
 ```powershell
 python main.py --video videos/landing_pad_test.mp4

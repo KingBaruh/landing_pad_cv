@@ -1,9 +1,9 @@
-﻿# Day 2, part A: classical tracking
+﻿# חלק 2 - מעקב באמצעות ראייה ממוחשבת קלאסית
 
 `tracker.py` implements Harris feature selection, pyramidal Lucas-Kanade optical
 flow, forward/backward match checking and RANSAC homography estimation. No learned
 models are used. Metric A4 pose is available with `--pose`; the three-process
-runtime remains later work.
+runtime is covered in חלק 3, in `../docs/multiprocessing.md`.
 
 ## Follow the code
 

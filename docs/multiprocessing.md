@@ -1,4 +1,4 @@
-# Three-process runtime
+# חלק 3 - הרצה בשלושה תהליכים
 
 ## Run
 
@@ -85,7 +85,7 @@ cause loss/rejection. This protects against blindly jumping over large motion.
 Catch-up consumes Fast CPU and can itself cause input drops; history is bounded
 to limit that cost. The runtime trades coverage for bounded image backlog.
 
-Three consecutive bad tracked poses trigger loss, as in the Day 2 fix. The normal
+Three consecutive bad tracked poses trigger loss, as in the חלק 2 fix. The normal
 slow scheduler then handles recovery. Image histories are bounded, while compact
 per-frame metrics are retained until shutdown and grow with recording length.
 
@@ -145,7 +145,7 @@ Three distinct worker PIDs were observed and all exited with code zero.
 The previously reviewed absence spans 380–450 and 720–755 had no tracking/Pose
 outputs on the frames processed in this run. This is not exhaustive false-positive
 validation. Runtime counts must not be directly ranked against the consecutive
-4K Day 2 run: asynchronous scheduling, dropped frames and working resolution
+4K run from חלק 2: asynchronous scheduling, dropped frames and working resolution
 change the conditions. Repeated runtime counts may vary with machine load.
 
 Artifacts: `outputs/runtime_new_video/`, including `performance.png` and

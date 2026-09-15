@@ -1,4 +1,4 @@
-# Day 2, part B: A4 pose
+# חלק 2 - חישוב מיקום ותנוחה של דף A4
 
 `pose.py` implements classical calibrated pose estimation. No learned model is
 used. Four tracked paper corners and a 210 x 297 mm planar A4 model determine a

@@ -1,4 +1,4 @@
-# Camera calibration — Day 1
+# חלק 1 - כיול המצלמה
 
 This is the separate, offline calibration application required by the assignment.
 It estimates the camera matrix and lens distortion from checkerboard images.
@@ -113,12 +113,6 @@ Sampling can be reproduced from the project root with:
 ```powershell
 .venv\Scripts\python.exe tmp/chessboard_review/analyze_video.py --video chessboard_2 --step 30
 ```
-
-The sampling and diagnostic scripts are currently task analysis helpers in `tmp/`.
-
-- `חוברת.pdf`, PDF pages 29–30: camera matrix, intrinsics and extrinsics.
-- `חוברת.pdf`, PDF page 34: distortion and calibration with a planar board.
-- `summary_2024.pdf`, PDF pages 93 and 95: Canny and Hough for the later detectors.
 
 After real calibration and inspection, continue with `detection/slow_detector.py`
 and then `detection/x_detector.py`. Rectification will also require implementing

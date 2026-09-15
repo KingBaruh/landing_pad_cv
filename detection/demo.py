@@ -1,4 +1,4 @@
-"""Offline Day 1 demonstration: python -m detection.demo --help.
+"""Offline demonstration for חלק 1: python -m detection.demo --help.
 
 Video sampling here evaluates the slow detector; it is not the three-process
 tracking application. Every returned corner uses the original frame resolution.

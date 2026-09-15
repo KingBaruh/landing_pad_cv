@@ -1,4 +1,4 @@
-# Day 1 landing-pad detection
+# חלק 1 - זיהוי משטח הנחיתה
 
 The detector finds a visible light quadrilateral containing a large dark X. It
 returns four corners and a heuristic quality score. It uses classical OpenCV
