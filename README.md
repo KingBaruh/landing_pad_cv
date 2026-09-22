@@ -130,8 +130,31 @@ Delayed slow detections are initialized on their actual source frame and tracked
 through a bounded history before use. They are never attached directly to a newer
 frame. The runtime preserves the calibration's pixel-error gate when resizing.
 Image queues are bounded and may drop frames under load. The current measured
-real-video throughput is below 30 FPS; multiprocessing alone does not establish
-real-time performance or metric distance accuracy.
+throughput depends on both Fast and the input decoder; multiprocessing alone
+does not establish real-time performance or metric distance accuracy.
+
+For 4K phone recordings, prepare a lossless video at the existing working
+resolution before starting the runtime:
+
+```powershell
+python main.py --video videos/v3.mp4 --prepare-video --width 640 --output outputs/fps_v3
+```
+
+The first run performs an explicitly offline preparation step; subsequent runs
+reuse `outputs/video_cache/`. HuffYUV preserves the exact `INTER_AREA`-resized
+pixels, all decoded frames, and the source FPS. The throughput-oriented command
+uses 640x360 for a 3840x2160 source; K and the pixel-error gate are scaled accordingly.
+There is no crop or change to physical A4 dimensions. Use `--width 960` for more
+detail, or omit `--width` to retain the 1280x720 default. Smaller images reduce
+the visibility of distant/thin markers, so compare Pose availability too.
+Lossless caches are larger than phone recordings and are excluded from Git.
+Preparation time is separate from runtime FPS. This option is for recordings;
+it does not make live 4K decoding real-time. Omit `--prepare-video` for cameras.
+
+`results.json` now includes a `performance` section with mean/p95 Fast time,
+frames exceeding the 33.33 ms budget, compute capacity, measured stream FPS,
+and total FPS including startup/finalization. Always inspect dropped frames
+and Pose availability too. See [FPS measurements and limitations](docs/performance.md).
 
 See [the runtime design and validation](docs/multiprocessing.md) for communication,
 coordinate conventions, shutdown, measured results, and remaining limitations.

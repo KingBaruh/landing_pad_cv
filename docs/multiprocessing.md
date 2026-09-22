@@ -41,8 +41,10 @@ is three application workers plus their launching parent, not three threads.
   second of source time, with local retries every 0.2 seconds after recent loss.
   Periodic corrections also run while tracking, rather than detecting every frame.
 
-All vision components remain classical OpenCV. OpenCV uses one thread per worker
-to avoid each process creating its own large compute pool.
+All vision components remain classical OpenCV. Fast uses two OpenCV threads by
+default (`--opencv-threads`); Video and Slow use one each. Video decoding
+uses FFmpeg's automatic limit. Override it
+with `--decoder-threads` when benchmarking another CPU.
 
 ## Coordinates and confidence
 
@@ -64,12 +66,20 @@ score. These are heuristic scores, not calibrated probabilities.
 
 ## Queues, delayed results and overload
 
-Each of the four image/request/result queues has capacity one. Frame and display
-messages use best-effort replacement to avoid backlog; a multiprocessing feeder
+Input has capacity six to absorb short processing spikes; request, reply and
+display queues have capacity one. Image pixels use a bounded shared-memory pool,
+and only metadata crosses pipes. A slot stays owned until the reader finishes
+copying it, so buffer reuse cannot change a frame retained by tracking/history.
+Frame and display messages use best-effort replacement to avoid backlog; a multiprocessing feeder
 race may drop an incoming frame as well. Requests, replies and EOF sentinels use
 timed reliable puts that observe the shared stop event. `Queue.empty()`/`qsize()`
 are not used for synchronization, and exceptions are not swallowed indiscriminately.
 Only one detection request is outstanding at a time.
+
+The input buffer can add up to six source-frame periods of queueing under load.
+It absorbs bursts, not sustained overload. Check measured latency and dropped
+frame IDs alongside FPS. Optional `--prepare-video` moves decoding/resizing of
+recorded 4K input to an offline lossless cache; see [performance notes](performance.md).
 
 Fast retains at most 16 received undistorted frames. On a reply it:
 

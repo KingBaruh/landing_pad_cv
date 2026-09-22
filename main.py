@@ -1,7 +1,7 @@
 """Three-process classical CV runtime. Run python main.py --help."""
 
 import argparse
-from dataclasses import asdict
+from dataclasses import asdict, replace
 import json
 import multiprocessing as mp
 from pathlib import Path
@@ -12,6 +12,7 @@ import numpy as np
 
 from calibration.calibrate import load_camera_params
 from config.config import AppConfig, RuntimeConfig
+from common.shared_frame_queue import SharedFrameQueue
 from processes.video_player import video_player_main
 from processes.fast_process import fast_process_main
 from processes.slow_process import slow_process_main
@@ -65,6 +66,14 @@ def _collect_worker_events(status_queue, events):
             print(event['error'], flush=True)
         elif event['event'] == 'started':
             print(f"{event['worker']} process started (PID {event['pid']})", flush=True)
+        elif event['event'] == 'finished' and event['worker'] == 'Fast':
+            stats = event['stats']
+            performance = stats.get('performance', {})
+            if performance.get('stream_fps') is not None:
+                print(f"Fast: mean {performance['mean_processing_ms']:.1f} ms, "
+                      f"p95 {performance['p95_processing_ms']:.1f} ms, "
+                      f"stream {performance['stream_fps']:.2f} FPS, "
+                      f"skipped source frames {stats['skipped_source_frames']}", flush=True)
 
 
 def _wait_for_workers(processes, status_queue, events, stop_event):
@@ -162,6 +171,17 @@ def run(config, params, stop_event=None):
         pose_error_limit,
     ) = _prepare_camera_parameters(config, params)
 
+    if config.prepare_video:
+        if not isinstance(config.source, str):
+            raise ValueError('Offline preparation is available only for recorded videos.')
+        from common.prepared_video import prepare_video
+        import cv2
+
+        cv2.setNumThreads(config.opencv_threads)
+        prepared = prepare_video(config.source, original_size, working_size,
+                                 Path('outputs/video_cache'))
+        config = replace(config, prepared_video=str(prepared))
+
     # Windows starts each worker in a fresh Python process.
     context = mp.get_context('spawn')
     stop_event = stop_event if stop_event is not None else context.Event()
@@ -170,10 +190,12 @@ def run(config, params, stop_event=None):
 
     # Bound image queues to prevent an ever-growing backlog. Frame/display
     # traffic may be dropped; requests, replies and EOF use reliable delivery.
-    frame_queue = context.Queue(maxsize=1)          # Video -> Fast
-    detection_request_queue = context.Queue(maxsize=1)  # Fast -> Slow
+    # Six slots absorb a short correction/check spike without an unbounded
+    # backlog; put_latest still discards old input under sustained overload.
+    frame_queue = SharedFrameQueue(context, working_size, maxsize=6)  # Video -> Fast
+    detection_request_queue = SharedFrameQueue(context, working_size)  # Fast -> Slow
     detection_result_queue = context.Queue(maxsize=1)   # Slow -> Fast
-    display_result_queue = context.Queue(maxsize=1)     # Fast -> Video
+    display_result_queue = SharedFrameQueue(context, working_size)    # Fast -> Video
     status_queue = context.Queue()                # Workers -> supervisor
 
     worker_definitions = [
@@ -285,12 +307,19 @@ def _parse_arguments():
     parser.add_argument('--local-interval', type=float, default=0.2)
     parser.add_argument('--pose-reset-after', type=int, default=3)
     parser.add_argument('--save-every', type=int, default=30)
+    parser.add_argument('--opencv-threads', type=int, default=2,
+                        help='Fast OpenCV threads (default: 2); Video and Slow use one each.')
+    parser.add_argument('--decoder-threads', type=int, default=0,
+                        help='FFmpeg video decoder threads; 0 selects its automatic limit.')
+    parser.add_argument('--prepare-video', action='store_true',
+                        help='Prepare/reuse a lossless resized video before starting workers (offline).')
     args = parser.parse_args()
 
     if (
         args.width < 100
+        or args.decoder_threads < 0
         or args.max_frames < 0
-        or min(args.history_size, args.max_frame_gap, args.pose_reset_after, args.save_every) < 1
+        or min(args.history_size, args.max_frame_gap, args.pose_reset_after, args.save_every, args.opencv_threads) < 1
         or not all(
             np.isfinite(value) and value > 0
             for value in (args.playback_speed, args.slow_interval, args.local_interval)
@@ -299,6 +328,8 @@ def _parse_arguments():
         parser.error('Frame limits, dimensions, speed and intervals must be positive.')
     if args.video is not None and not args.video.is_file():
         parser.error(f'Video not found: {args.video}')
+    if args.prepare_video and args.video is None:
+        parser.error('--prepare-video requires --video; it cannot accelerate a live camera.')
 
     return parser, args
 
@@ -324,6 +355,9 @@ def main():
         local_interval_s=args.local_interval,
         pose_reset_after=args.pose_reset_after,
         save_every=args.save_every,
+        opencv_threads=args.opencv_threads,
+        decoder_threads=args.decoder_threads,
+        prepare_video=args.prepare_video,
     )
     exit_code = run(config, camera_params)
     print(f'Runtime finished. Results: {config.output}', flush=True)

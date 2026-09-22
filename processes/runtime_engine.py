@@ -23,6 +23,7 @@ class FastEngine:
         self.last_corners = None
         self.last_valid_time = None
         self.previous_pose = None
+        self.accepted_pose = None
         self.rejection_streak = 0
         self.reason = 'waiting_for_detection'
         self.state = 'SEARCHING'
@@ -40,6 +41,7 @@ class FastEngine:
             self.stats['losses'] += 1
         self.tracker.reset()
         self.previous_pose = None
+        self.accepted_pose = None
         self.rejection_streak = 0
         self.state, self.reason = 'LOST', reason
         self.confidence, self.points = 0.0, 0
@@ -50,6 +52,7 @@ class FastEngine:
         Reject non-increasing source IDs. Tracking failures clear the active
         state; this method does not run detection or estimate the current Pose.
         """
+        self.accepted_pose = None
         if self.history:
             gap = msg.frame_id-next(reversed(self.history))
             if gap <= 0:
@@ -82,6 +85,13 @@ class FastEngine:
         # These deadlines use source seconds, so playback speed does not
         # silently change which parts of a video get scheduled for detection.
         full = msg.timestamp >= self.next_full
+        # During the first source second, retry a missed initial detection at
+        # the short recovery interval. A single poor first frame should not
+        # force a whole second without Pose. Steady-state full search cadence
+        # is unchanged, and only one request can remain outstanding.
+        if (self.state == 'SEARCHING' and msg.timestamp < self.config.slow_interval_s
+                and msg.timestamp >= self.next_local):
+            full = True
         recent = (self.last_valid_time is not None and
                   0 <= msg.timestamp-self.last_valid_time <= self.config.slow_interval_s)
         local = (not self.tracker.initialized and recent and msg.timestamp >= self.next_local)
@@ -94,7 +104,9 @@ class FastEngine:
         """Advance search deadlines only after the request has entered its queue."""
         self.pending_id = request.frame_id
         self.next_local = request.timestamp+self.config.local_interval_s
-        if request.allow_global:
+        # Extra bootstrap attempts must not postpone the normal full-search
+        # deadline (otherwise a failed retry can delay initial acquisition).
+        if request.allow_global and request.timestamp >= self.next_full:
             self.next_full = request.timestamp+self.config.slow_interval_s
         self.stats['requests'] += 1
 
@@ -151,6 +163,9 @@ class FastEngine:
             return reject('replayed_pose_'+pose.reason)
         self.tracker = candidate
         self.previous_pose = pose
+        # result() runs immediately on this same frame and these same corners.
+        # Reuse this validated fit once instead of solving the identical PnP twice.
+        self.accepted_pose = pose
         self.rejection_streak = 0
         self.state, self.reason = 'TRACKING', 'reinitialized_from_slow'
         self.points = len(candidate.prev_points)
@@ -172,8 +187,11 @@ class FastEngine:
         msg = next(reversed(self.history.values()))
         valid = self.tracker.initialized
         corners = self.tracker.corners.copy() if valid else None
-        pose = estimate_pose(corners, self.K, None, previous=self.previous_pose,
-                             max_reprojection_error_px=self.pose_limit)
+        pose = self.accepted_pose
+        self.accepted_pose = None
+        if pose is None:
+            pose = estimate_pose(corners, self.K, None, previous=self.previous_pose,
+                                 max_reprojection_error_px=self.pose_limit)
         self.previous_pose = pose if pose.valid else None
         # One bad fit can be transient. Consecutive failures trigger recovery
         # even when optical flow still reports a geometrically plausible track.

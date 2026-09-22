@@ -1,6 +1,8 @@
 import cv2
 import numpy as np
 
+_MAX_LINE_FIT_POINTS = 256
+
 
 def detect_x(rectified_image, *, diagnostics=None):
     """Return (valid, quality_score) for a large dark X on a light sheet.
@@ -125,6 +127,11 @@ def _verify_mask(dark, diagnostics):
             support = dark_points[near].astype(np.float32)
             if len(support) < 8:
                 continue
+            # Uniformly cover the full stroke while bounding robust-fit cost.
+            # All foreground pixels still participate in the acceptance tests.
+            if len(support) > _MAX_LINE_FIT_POINTS:
+                indices = np.linspace(0, len(support)-1, _MAX_LINE_FIT_POINTS).astype(int)
+                support = support[indices]
             vx, vy, x0, y0 = cv2.fitLine(support, cv2.DIST_HUBER, 0, .01, .01).ravel()
             fitted_direction = np.array([vx, vy], dtype=np.float64)
             if np.any(np.abs(fitted_direction) < 1e-6) or abs(np.dot(fitted_direction, direction)) < .9:
@@ -132,54 +139,64 @@ def _verify_mask(dark, diagnostics):
             if np.dot(fitted_direction, direction) < 0:
                 fitted_direction *= -1
             group[index] = (length, np.array([x0,y0], dtype=np.float64), fitted_direction)
-    best_valid, best_score = False, 0.0
-    best_metrics = {'rejection_reason': 'intersection_outside_center'}
-    for length_a, origin_a, direction_a in diagonal_lines[0]:
-        for length_b, origin_b, direction_b in diagonal_lines[1]:
-            matrix = np.column_stack((direction_a, -direction_b))
-            if abs(np.linalg.det(matrix)) < .2:
-                continue
-            t, _ = np.linalg.solve(matrix, origin_b-origin_a)
-            crossing = origin_a + t*direction_a
-            if np.any(crossing < .30*size) or np.any(crossing > .70*size):
-                continue
+    return _score_line_pairs(diagonal_lines, dark_points, distance_to_dark, border, diagnostics)
 
-            # Explain foreground using the fitted lines, not a fixed X template.
-            distances = []
-            for origin, direction in ((origin_a, direction_a), (origin_b, direction_b)):
-                relative = dark_points-origin
-                distances.append(np.abs(relative[:,0]*direction[1]-relative[:,1]*direction[0]))
-            explained = float((np.minimum(*distances) <= 14).mean())
 
-            # Each ray must extend well towards the paper edge. A slash, V or
-            # truncated arm cannot pass just because two line extensions cross.
-            arm_scores = []
-            for direction in (direction_a, -direction_a, direction_b, -direction_b):
-                edge = np.where(direction > 0, size-1-border, border)
-                reach = float(np.min((edge-crossing)/direction))
-                samples = crossing + np.linspace(.12, .82, 30)[:,None]*reach*direction
-                samples = np.clip(np.round(samples).astype(int), 0, size-1)
-                arm_scores.append(float((distance_to_dark[samples[:,1],samples[:,0]] <= 10).mean()))
-            cx, cy = np.round(crossing).astype(int)
-            crossing_distance = float(distance_to_dark[cy, cx])
-            centrality = max(0., 1-float(np.linalg.norm(crossing-99.5))/60)
-            strength = min(1., min(length_a, length_b)/185)
-            # This weighted score ranks candidates. The separate hard checks
-            # below still require all arms, concentrated ink and a dark crossing.
-            score = float(.25*strength + .35*min(arm_scores) + .25*explained + .15*centrality)
-            reason = None
-            if min(arm_scores) < .70:
-                reason = 'missing_or_short_arm'
-            elif explained < .75:
-                reason = 'foreground_not_concentrated_on_lines'
-            elif crossing_distance > 4:
-                reason = 'no_dark_intersection'
-            valid = reason is None
-            if (valid and not best_valid) or (valid == best_valid and score > best_score):
-                best_valid, best_score = valid, score
-                best_metrics = dict(intersection_normalized=(crossing/(size-1)).tolist(),
-                                    arm_support=arm_scores, explained_foreground=explained,
-                                    crossing_distance_px=crossing_distance, rejection_reason=reason)
-    if diagnostics is not None:
-        diagnostics.update(best_metrics)
-    return bool(best_valid), min(1., best_score) if best_valid else min(.49, best_score)
+def _score_line_pairs(groups, dark_points, distance_to_dark, border, diagnostics):
+    """Evaluate the same bounded line pairs in arrays, retaining every gate.
+
+    Pair order matches the original nested loop, including first-wins ties.
+    Ink-to-line distances are computed once per line instead of once per pair.
+    """
+    size = distance_to_dark.shape[0]
+    lengths, origins, directions, ink_distances = [], [], [], []
+    for group in groups:
+        lengths.append(np.array([line[0] for line in group]))
+        origins.append(np.stack([line[1] for line in group]))
+        directions.append(np.stack([line[2] for line in group]))
+        relative = dark_points[None, :, :]-origins[-1][:, None, :]
+        ink_distances.append(np.abs(relative[:, :, 0]*directions[-1][:, None, 1]
+                                    - relative[:, :, 1]*directions[-1][:, None, 0]))
+    a = np.repeat(np.arange(len(groups[0])), len(groups[1]))
+    b = np.tile(np.arange(len(groups[1])), len(groups[0]))
+    matrices = np.stack((directions[0][a], -directions[1][b]), axis=2)
+    keep = np.abs(np.linalg.det(matrices)) >= .2
+    a, b, matrices = a[keep], b[keep], matrices[keep]
+    parameters = np.linalg.solve(matrices, (origins[1][b]-origins[0][a])[..., None])[..., 0]
+    crossings = origins[0][a]+parameters[:, :1]*directions[0][a]
+    keep = ((crossings >= .30*size) & (crossings <= .70*size)).all(axis=1)
+    a, b, crossings = a[keep], b[keep], crossings[keep]
+    if not len(a):
+        diagnostics['rejection_reason'] = 'intersection_outside_center'
+        return False, 0.0
+    explained = (np.minimum(ink_distances[0][a], ink_distances[1][b]) <= 14).mean(axis=1)
+
+    # Four rays per pair, each with the original 30 samples along the arm.
+    rays = np.stack((directions[0][a], -directions[0][a],
+                     directions[1][b], -directions[1][b]), axis=1)
+    edges = np.where(rays > 0, size-1-border, border)
+    reach = ((edges-crossings[:, None, :])/rays).min(axis=2)
+    samples = (crossings[:, None, None, :]
+               + np.linspace(.12, .82, 30)[None, None, :, None]
+               * reach[:, :, None, None]*rays[:, :, None, :])
+    samples = np.clip(np.round(samples).astype(int), 0, size-1)
+    arms = (distance_to_dark[samples[..., 1], samples[..., 0]] <= 10).mean(axis=2)
+    xy = np.round(crossings).astype(int)
+    crossing_distance = distance_to_dark[xy[:, 1], xy[:, 0]]
+    centrality = np.maximum(0., 1-np.linalg.norm(crossings-99.5, axis=1)/60)
+    strength = np.minimum(1., np.minimum(lengths[0][a], lengths[1][b])/185)
+    scores = .25*strength + .35*arms.min(axis=1) + .25*explained + .15*centrality
+    valid = (arms.min(axis=1) >= .70) & (explained >= .75) & (crossing_distance <= 4)
+    # Every valid candidate outranks every invalid one; scores are within [0,1].
+    best = int(np.argmax(scores + 2*valid))
+    reason = None
+    if arms[best].min() < .70:
+        reason = 'missing_or_short_arm'
+    elif explained[best] < .75:
+        reason = 'foreground_not_concentrated_on_lines'
+    elif crossing_distance[best] > 4:
+        reason = 'no_dark_intersection'
+    diagnostics.update(intersection_normalized=(crossings[best]/(size-1)).tolist(),
+                       arm_support=arms[best].tolist(), explained_foreground=float(explained[best]),
+                       crossing_distance_px=float(crossing_distance[best]), rejection_reason=reason)
+    return bool(valid[best]), min(1. if valid[best] else .49, float(scores[best]))

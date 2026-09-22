@@ -21,3 +21,5 @@ outputs/logs/*
 outputs/plots/*
 !outputs/plots/.gitkeep
 *.npz
+outputs/fps_review/
+outputs/video_cache/

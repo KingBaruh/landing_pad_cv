@@ -34,4 +34,7 @@ class RuntimeConfig:
     local_interval_s: float = .2
     pose_reset_after: int = 3    # Consecutive rejected tracked poses before resetting.
     save_every: int = 30
-    opencv_threads: int = 1
+    opencv_threads: int = 2     # Fast only; Slow and Video use one OpenCV thread.
+    decoder_threads: int = 0    # FFmpeg automatic limit; configurable for each CPU.
+    prepare_video: bool = False # Offline lossless resize, for recorded videos only.
+    prepared_video: str | None = None

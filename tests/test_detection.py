@@ -1,5 +1,6 @@
 import itertools
 import unittest
+from unittest.mock import patch
 
 import cv2
 import numpy as np
@@ -101,6 +102,19 @@ class GeometryTests(unittest.TestCase):
 
 
 class XTests(unittest.TestCase):
+    def test_bounded_line_fit_preserves_markers_and_distractor_decisions(self):
+        rng = np.random.default_rng(91)
+        for marker in ('x', 'handdrawn_x', 'blank', 'slash', 'plus', 'three_arms',
+                       'tiny_x', 'checkerboard', 'text', 'border'):
+            for noise in (0., 5., 12.):
+                paper = make_pad(marker)
+                image = np.clip(paper+rng.normal(0, noise, paper.shape), 0, 255).astype(np.uint8)
+                with patch('detection.x_detector._MAX_LINE_FIT_POINTS', 100000):
+                    reference = detect_x(image)
+                actual = detect_x(image)
+                self.assertEqual(actual[0], reference[0], (marker, noise))
+                self.assertAlmostEqual(actual[1], reference[1], delta=.03)
+
     def test_faint_single_pixel_strokes_survive_resize_contrast_check(self):
         for complete in (False, True):
             paper = np.full((396,280),245,np.uint8)

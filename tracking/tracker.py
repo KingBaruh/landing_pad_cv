@@ -77,22 +77,31 @@ class LandingPadTracker:
         return mask
 
     def _features(self, gray, corners, existing=None):
-        mask = self._mask(gray, corners)
         count = self.max_points - (0 if existing is None else len(existing))
         if count <= 0:
             return existing
+        # Harris uses a local 3x3 derivative/block neighbourhood. Restrict its
+        # image to the pad bounds plus a halo, retaining full-image coordinates.
+        # This avoids calculating corner responses on the entire background.
+        low = np.maximum(np.floor(corners.min(axis=0)).astype(int)-8, 0)
+        high = np.minimum(np.ceil(corners.max(axis=0)).astype(int)+9, gray.shape[::-1])
+        x0, y0 = low
+        x1, y1 = high
+        crop = gray[y0:y1, x0:x1]
+        mask = self._mask(crop, corners-low)
         # Measure quality against all pad features even when replenishing.
         # Masking existing strong points first would promote weak edge points.
-        new = cv2.goodFeaturesToTrack(gray, maxCorners=self.max_points, qualityLevel=.001,
+        new = cv2.goodFeaturesToTrack(crop, maxCorners=self.max_points, qualityLevel=.001,
                                      minDistance=5, mask=mask, blockSize=3, useHarrisDetector=True)
         if new is None:
             return existing
+        new += low.astype(np.float32)
         if existing is not None:
             distances = np.linalg.norm(new.reshape(-1, 1, 2)-existing.reshape(1, -1, 2), axis=2)
             # Replenish only inside the paper, not on an uncertain moving edge
             # where fabric features could gradually replace the original anchors.
             interior = cv2.erode(mask, np.ones((9, 9), np.uint8))
-            xy = np.round(new.reshape(-1, 2)).astype(int)
+            xy = np.round(new.reshape(-1, 2)-low).astype(int)
             new = new[(distances.min(axis=1) >= 5) & (interior[xy[:, 1], xy[:, 0]] > 0)][:count]
         return new if existing is None else np.concatenate((existing, new))
 
@@ -167,12 +176,26 @@ class LandingPadTracker:
         if (frame.shape[1], frame.shape[0]) != self.frame_size:
             return self._lost('frame_size_changed')
 
+        # Build LK pyramids only around the tracked points. A 160-pixel halo
+        # covers the 31-pixel window at all four pyramid levels plus motion.
+        # Align the crop to the coarsest 8-pixel grid and use the same origin
+        # in both images; public/reference points stay in full-image pixels.
+        xy = self.prev_points[:, 0]
+        low = np.maximum(np.floor(xy.min(axis=0)).astype(int)-160, 0)//8*8
+        high = np.minimum((np.ceil(xy.max(axis=0)).astype(int)+168)//8*8, gray.shape[::-1])
+        x0, y0 = low
+        x1, y1 = high
+        offset = low.astype(np.float32)
+        previous_crop = self.prev_gray[y0:y1, x0:x1]
+        current_crop = gray[y0:y1, x0:x1]
         # Forward/backward LK: a reliable match returns close to its origin.
         lk = dict(winSize=(31, 31), maxLevel=3,
                   criteria=(cv2.TERM_CRITERIA_EPS | cv2.TERM_CRITERIA_COUNT, 30, .01))
-        current, status, errors = cv2.calcOpticalFlowPyrLK(self.prev_gray, gray, self.prev_points, None, **lk)
+        current, status, errors = cv2.calcOpticalFlowPyrLK(
+            previous_crop, current_crop, self.prev_points-offset, None, **lk)
         if current is None or status is None or errors is None:
             return self._lost('optical_flow_failed')
+        current += offset
         keep = ((status.ravel() == 1) & np.isfinite(current).all(axis=(1, 2)) &
                 np.isfinite(errors.ravel()) & (errors.ravel() <= self.max_lk_error))
         if not keep[:4].all():
@@ -181,9 +204,11 @@ class LandingPadTracker:
         reference = self.reference_points[keep]
         if len(after) < self.min_points:
             return self._lost('too_few_lk_points', len(after))
-        back, status_back, _ = cv2.calcOpticalFlowPyrLK(gray, self.prev_gray, after, None, **lk)
+        back, status_back, _ = cv2.calcOpticalFlowPyrLK(
+            current_crop, previous_crop, after-offset, None, **lk)
         if back is None or status_back is None:
             return self._lost('backward_flow_failed')
+        back += offset
         keep = ((status_back.ravel() == 1) &
                 (np.linalg.norm(back-before, axis=(1, 2)) <= self.max_fb_error))
         if not keep[:4].all():

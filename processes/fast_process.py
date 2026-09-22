@@ -28,11 +28,12 @@ def fast_process_main(frame_queue, request_queue, detection_queue, result_queue,
     writing per-frame JSON/CSV results to the prepared output directory.
     """
     cv2.setNumThreads(config.opencv_threads)
-    # Lens geometry stays fixed throughout the run, so compute these maps
-    # once. Keeping K as the output camera matrix simplifies downstream Pose.
+    # Precompute fixed-camera maps once; all downstream pixels retain K.
     maps = cv2.initUndistortRectifyMap(K, dist, None, K, size, cv2.CV_32FC1)
     engine = FastEngine(K, pose_limit, config)
     rows = {}
+    processing_times = []
+    first_completed_at = last_completed_at = None
     output = Path(config.output)
     ready.set()
     began = monotonic()
@@ -66,6 +67,10 @@ def fast_process_main(frame_queue, request_queue, detection_queue, result_queue,
                 engine.sent(request)
             result.processing_ms = (perf_counter()-start)*1000
             result.latency_ms = (monotonic()-msg.captured_at)*1000
+            processing_times.append(result.processing_ms)
+            last_completed_at = monotonic()
+            if first_completed_at is None:
+                first_completed_at = last_completed_at
             rows[msg.frame_id] = record(result)
             put_latest(result_queue, result)
         # The last slow response may arrive after the last input frame. Replay
@@ -87,9 +92,23 @@ def fast_process_main(frame_queue, request_queue, detection_queue, result_queue,
                 rows[result.frame_id] = record(result)
                 put_latest(result_queue, result)
         put_reliable(request_queue, None, stop)
+        elapsed = monotonic()-began
+        mean_ms = float(np.mean(processing_times)) if processing_times else None
+        stream_elapsed = (last_completed_at-first_completed_at) if len(processing_times) > 1 else 0.
+        performance = dict(
+            target_fps=30., frame_budget_ms=1000/30,
+            mean_processing_ms=mean_ms,
+            p95_processing_ms=float(np.percentile(processing_times, 95)) if processing_times else None,
+            compute_capacity_fps=1000/mean_ms if mean_ms else None,
+            frames_over_budget=sum(value > 1000/30 for value in processing_times),
+            # Stream excludes startup/finalization; total FPS includes them.
+            # Neither metric divides by source time or hides dropped frames.
+            stream_fps=(len(processing_times)-1)/stream_elapsed if stream_elapsed else None,
+            total_fps=len(processing_times)/elapsed if elapsed else None,
+        )
         report = dict(processed_frames=len(rows), valid_frames=sum(r['valid'] for r in rows.values()),
                       pose_valid_frames=sum(r['pose_valid'] for r in rows.values()),
-                      elapsed_s=monotonic()-began, working_size=list(size),
+                      elapsed_s=elapsed, performance=performance, working_size=list(size),
                       camera_matrix=K.tolist(), pose_error_limit_px=pose_limit,
                       coordinate_space='undistorted_working_resolution',
                       **engine.stats, detection_events=engine.detection_events,

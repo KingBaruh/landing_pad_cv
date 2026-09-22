@@ -93,6 +93,20 @@ class RecoveryTests(unittest.TestCase):
 
 
 class TrackerTests(unittest.TestCase):
+    def test_cropped_flow_keeps_full_image_coordinates_near_boundaries(self):
+        # Independent ground truth: translated paper close to each image edge.
+        # This exercises a clipped halo and changing crop origins during motion.
+        for offset in ((-330, -170), (330, 170)):
+            quad = rotated_quad(0)+np.float32(offset)
+            tracker = LandingPadTracker()
+            self.assertTrue(tracker.initialize(render_scene(quad, 'handdrawn_x'), quad))
+            for index in range(1, 13):
+                movement = -np.sign(offset)*index*1.5
+                target = quad+movement.astype(np.float32)
+                result = tracker.update(render_scene(target, 'handdrawn_x'))
+                self.assertTrue(result.valid, (offset, index, result.reason))
+                self.assertLess(np.linalg.norm(result.corners-target, axis=1).max(), 4.)
+
     def test_recovery_restores_coordinates_and_falls_back_from_stale_window(self):
         quad = rotated_quad(20)
         frame = render_scene(quad)

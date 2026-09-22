@@ -16,7 +16,8 @@ def slow_process_main(request_queue, result_queue, camera_matrix, pose_limit,
     Every completed request gets a reply, including unsuccessful detections;
     None ends the stream. Return request and detector-call counts at shutdown.
     """
-    cv2.setNumThreads(config.opencv_threads)
+    # Leave the parallel compute budget to the per-frame Fast worker.
+    cv2.setNumThreads(1)
     detector = SlowDetector(camera_matrix=camera_matrix, max_pose_error_px=pose_limit)
     ready.set()
     requests = calls = 0

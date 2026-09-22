@@ -29,6 +29,29 @@ def scene(index):
 
 
 class AlignmentTests(unittest.TestCase):
+    def test_initial_negative_detection_retries_then_returns_to_normal_cadence(self):
+        engine = self.engine(max_frame_gap=100)
+        for index in (0, 6, 12, 19, 25):
+            message, _, _ = scene(index)
+            engine.advance(message)
+            request = engine.request()
+            self.assertIsNotNone(request)
+            self.assertTrue(request.allow_global)
+            engine.sent(request)
+            engine.accept(DetectionResult(index, message.timestamp, False, None, 0.))
+        # Extra retries must not postpone the first regular full-search slot.
+        engine.advance(scene(31)[0])
+        request = engine.request()
+        self.assertTrue(request.allow_global)
+        engine.sent(request)
+        engine.accept(DetectionResult(31, 31/30, False, None, 0.))
+        # Once bootstrap expires, a negative scene does not cause permanent
+        # five-per-second global searches.
+        engine.advance(scene(38)[0])
+        self.assertIsNone(engine.request())
+        engine.advance(scene(62)[0])
+        self.assertTrue(engine.request().allow_global)
+
     def engine(self,**options):
         return FastEngine(K,5,RuntimeConfig('test','outputs/test_runtime',**options))
 
