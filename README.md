@@ -4,6 +4,52 @@ Classical OpenCV solution for detecting, tracking, and estimating the pose of an
 
 For installation and full runtime instructions, see the [run guide](RUNNING.md).
 
+## System demonstration videos
+
+Click a preview to open its **silent MP4** (or download it to watch locally).
+The overlays show the detected boundary, tracking state, confidence, and estimated
+distance and orientation. These are offline replays of saved experiment results
+at the original source speed, not screen recordings or live FPS measurements.
+Frames that the runtime skipped are explicitly marked **NO SAVED RESULT**;
+no previous frame's detection is reused on them. `Valid` means the Pose passed
+the system's checks, not that its distance was verified with a physical measurement.
+
+### 1. Viewpoint changes
+
+The camera moves around the A4 target. The scene includes a blank A4 sheet and a
+rounded sheet with an X as distractors. The recorded run accepted Pose in 373 of
+377 processed frames, with no recorded tracking losses.
+
+[![Viewpoint changes - watch the silent demo](docs/demos/v3_poster.jpg)](docs/demos/v3_demo.mp4)
+
+[Watch or download demo 1](docs/demos/v3_demo.mp4)
+
+### 2. Tracking loss and recovery
+
+Repeated camera sweeps challenge tracking near the image edges. This clip keeps
+the failures visible: the recorded run had five tracking losses and accepted
+Pose in 339 of 421 processed frames.
+
+[![Tracking loss and recovery - watch the silent demo](docs/demos/v6_poster.jpg)](docs/demos/v6_demo.mp4)
+
+[Watch or download demo 2](docs/demos/v6_demo.mp4)
+
+### 3. Approach to the landing pad
+
+A handheld approach toward the target on a wooden surface demonstrates scale
+changes and a brief loss followed by recovery. The recorded run accepted Pose
+in 316 of 323 processed frames, with one tracking loss. This is a handheld
+demonstration, not an autonomous drone landing.
+
+[![Approach to the landing pad - watch the silent demo](docs/demos/v8_landing_poster.jpg)](docs/demos/v8_landing_demo.mp4)
+
+[Watch or download demo 3](docs/demos/v8_landing_demo.mp4)
+
+The [demo manifest](docs/demos/manifest.json) identifies the source recordings
+and saved results. With those files, matching calibration, and FFmpeg on PATH,
+regenerate the clips using `python -m benchmarks.export_demo_videos`.
+For measured processing performance, see [FPS measurements](docs/performance.md).
+
 The consolidated Hebrew [technical report](docs/technical_report.html) includes
 architecture, algorithms, synchronization, run instructions, eight experiments,
 and embedded performance graphs. Its [editable source](docs/technical_report.md)

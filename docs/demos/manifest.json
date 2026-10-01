@@ -1,0 +1,38 @@
+[
+  {
+    "source": "videos\\v3.mp4",
+    "results": "outputs\\experiment_v3\\results.json",
+    "video": "v3_demo.mp4",
+    "source_fps": 30.012821010917285,
+    "frames": 408,
+    "frames_without_saved_result": 31,
+    "pose_valid_frames": 373,
+    "recorded_tracking_losses": 0,
+    "audio": false,
+    "presentation": "Offline replay of saved results at source speed"
+  },
+  {
+    "source": "videos\\v6.mp4",
+    "results": "outputs\\experiment_v6\\results.json",
+    "video": "v6_demo.mp4",
+    "source_fps": 30.012814695862453,
+    "frames": 473,
+    "frames_without_saved_result": 52,
+    "pose_valid_frames": 339,
+    "recorded_tracking_losses": 5,
+    "audio": false,
+    "presentation": "Offline replay of saved results at source speed"
+  },
+  {
+    "source": "videos\\v8_landing.mp4",
+    "results": "outputs\\experiment_v8_landing\\results.json",
+    "video": "v8_landing_demo.mp4",
+    "source_fps": 30.0127732933957,
+    "frames": 336,
+    "frames_without_saved_result": 13,
+    "pose_valid_frames": 316,
+    "recorded_tracking_losses": 1,
+    "audio": false,
+    "presentation": "Offline replay of saved results at source speed"
+  }
+]
